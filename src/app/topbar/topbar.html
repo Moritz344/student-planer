@@ -1,0 +1,17 @@
+@if (menuSelected()) {
+  <app-menu (close)="this.menuSelected.set(false)"></app-menu>
+}
+
+<div class="container">
+  <div class="options-right">
+    <button class="button-with-bg" (click)="onMinimize()" ><img src="minimize.svg"></button>
+    <button class="menu" (click)="onMenu()" [class.selected]="menuSelected()"><img src="menu.svg"></button>
+    <button class="button-with-bg" (click)="onClose()"><img src="close.svg"></button>
+  </div>
+  @if (showLeftOptions()) {
+    <div class="options-left">
+      <button (click)="onGoBackToHome()"><img class="back" width="20" src="down.svg"></button>
+    </div>
+  }
+</div>
+

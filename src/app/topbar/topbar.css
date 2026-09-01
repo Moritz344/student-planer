@@ -1,0 +1,120 @@
+.container{
+  position: fixed;
+  right: 0;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  height: 50px;
+  background-color: var(--header-bg-color);
+  -webkit-app-region: drag;
+}
+
+.options-right {
+  display: flex;
+  position: absolute;
+  justify-content:center;
+  flex-direction: row;
+  gap: 10px;
+  top: 13px;
+  right: 10px;
+}
+
+.options-left {
+  display: flex;
+  position: absolute;
+  justify-content:center;
+  flex-direction: row;
+  gap: 10px;
+  top: 13px;
+  left: 10px;
+  -webkit-app-region: no-drag;
+}
+
+.options-left button {
+  background-color: transparent;
+}
+
+.options-left button:hover {
+  background-color: var(--ghost-hover);
+}
+
+.button-with-bg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  width: 25px;
+  height: 25px;
+  background-color: var(--border-color);
+  -webkit-app-region: no-drag;
+  user-select: none;
+}
+
+.options-right img{
+  width: 30px;
+  height: 20px;
+}
+
+.menu {
+  display: flex;
+  justify-content: center;
+  border-radius: 10px;
+  width: 30px;
+  align-items: center;
+  padding: 0;
+  height: 27px;
+  background: transparent;
+  -webkit-app-region: no-drag;
+}
+
+.menu img {
+  width: 17px;
+  height: 17px;
+}
+
+
+.options-right .menu.selected {
+  background-color: var(--button-color);
+}
+
+.options-right button:hover{
+  background-color: var(--button-color);
+}
+
+.options-middle {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  align-items: center;
+}
+
+img {
+  filter: brightness(0) invert(1);
+}
+
+.options-middle button {
+  display: flex;
+  align-items: center;
+  background: transparent;
+  height: 40px;
+  font-weight: bold;
+  user-select: none;
+  font-size: 17px;
+  color: white;
+  -webkit-app-region: no-drag;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.options-middle button:hover{
+  background: var(--button-color);
+}
+
+.options-middle button.selected {
+  background: var(--button-color);
+}
+
+.back {
+  transform: rotate(-270deg)
+}
+
