@@ -61,9 +61,6 @@ ipcMain.handle("open-external", async (_, url) => {
 
 
 ipcMain.handle("open-about",async () => {
-   if (aboutWindow) {
-     return;
-   }
    aboutWindow = new BrowserWindow({
       maxWidth: 400,
       maxHeight: 200,
@@ -94,7 +91,7 @@ app.on("window-all-closed", () => {
 
 function loadAngularRoute(window, route = "") {
   if (process.env.ELECTRON_DEV) {
-    window.loadURL(`http://localhost:4200/#/${route}`);
+    window.loadURL(`http://localhost:4200/${route}`);
   } else {
     window.loadFile(path.join(__dirname, 'dist/student-planer-app/browser/index.html'), {
       hash: '/' + route,
