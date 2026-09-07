@@ -1,0 +1,43 @@
+.container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0px;
+  width: 200px;
+  background-color: var(--bg-sidebar);
+}
+
+.item-icon {
+  width: 20px;
+  float: left;
+  margin-right: 5px;
+  filter: brightness(0) invert(1);
+}
+
+.container-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: absolute;
+  top: 80px;
+  left: 0px;
+  margin: 5px;
+  right: 0px;
+}
+
+.container-item button {
+  display: flex;
+  justify-content: left;
+  padding: 10px;
+  width: 100%;
+  background-color: transparent;
+  text-align: left;
+}
+
+.container-item button:hover{
+  background-color: var(--ghost-hover);
+}
+
+.container-item button.selected {
+  background-color: var(--ghost-hover);
+}
