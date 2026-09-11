@@ -2,6 +2,7 @@
 <app-leftbar></app-leftbar>
 
 @if (settings.view() == "home") {
+  <app-homework></app-homework>
 
 }@else if (settings.view() == "timetable") {
   <app-timetable></app-timetable>
@@ -16,4 +17,3 @@
   <app-about-dialog (close)="settings.showAbout.set(false)"></app-about-dialog>
 }
 
-<app-about-dialog></app-about-dialog>
