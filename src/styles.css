@@ -6,6 +6,7 @@
   --button-color: #38383C;
   --bg-sidebar: #35353A;
   --bg-card: #2d2d2d;
+  --about-bg: #212125;
   --bg-panel: #252525;
   --bg-color: #1e1e1e;
   --surface-color: #2d2d2d;
@@ -32,6 +33,13 @@
   --green-bright: #33d17a;
   --ghost: rgba(255, 255, 255, 0.1);
   --ghost-hover: rgba(255, 255, 255, 0.15);
+  --dialog-bg: #2d2d2d;
+  --dialog-header-bg: #353535;
+  --dialog-border: #404040;
+  --dialog-radius: 12px;
+  --dialog-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+  --dialog-backdrop: rgba(0, 0, 0, 0.5);
+  --dialog-close-hover: rgba(255, 255, 255, 0.1);
 }
 
 button {
@@ -55,13 +63,17 @@ button:hover {
 
 
 @keyframes enterPopup {
-  from {
+  0% {
     opacity: 0.5;
-    transform: translateY(20px);
+    transform: translate(var(--enter-popup-x, 0), var(--enter-popup-from-y, 20px));
   }
-  to {
+  70% {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate(var(--enter-popup-x, 0), var(--enter-popup-bounce-y, -6px));
+  }
+  100% {
+    opacity: 1;
+    transform: translate(var(--enter-popup-x, 0), var(--enter-popup-to-y, 0));
   }
 }
 
@@ -85,7 +97,7 @@ button:hover {
 }
 
 .leave-animation{
-  animation: 0.2s fadeOut;
+  animation: 0.2s fadeOut ease-out;
 }
 
 .white-img{
