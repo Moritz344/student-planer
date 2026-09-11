@@ -1,6 +1,7 @@
 {
   "name": "student-planer-app",
   "version": "0.0.0",
+  "author": "Moritz Maier",
   "description": "student planer",
   "main": "main.js",
   "scripts": {
