@@ -2,6 +2,8 @@ const { app,dialog, BrowserWindow,net, ipcMain, protocol, shell } = require("ele
 const fs = require("fs");
 const path = require("path");
 
+const db = require("./db.cjs");
+
 let win;
 
 async function createWindow() {
@@ -50,6 +52,9 @@ ipcMain.handle("open-external", async (_, url) => {
   await shell.openExternal(url);
 });
 
+ipcMain.handle("list-homework", async (_,) => {
+  return db.listHomework();
+});
 
 
 app.whenReady().then(async() => {
