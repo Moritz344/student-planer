@@ -2,7 +2,6 @@ const { app,dialog, BrowserWindow,net, ipcMain, protocol, shell } = require("ele
 const fs = require("fs");
 const path = require("path");
 
-let aboutWindow;
 let win;
 
 async function createWindow() {
@@ -18,7 +17,7 @@ async function createWindow() {
     },
   });
 
-  //win.webContents.openDevTools();
+  win.webContents.openDevTools();
 
 
 
@@ -47,35 +46,8 @@ ipcMain.handle("get-about-data",async () => {
     }
 })
 
-ipcMain.handle("close-electron-window",async(_,name) => {
-  if (name == "about") {
-    aboutWindow.close();
-    aboutWindow = null;
-  }
-});
-
 ipcMain.handle("open-external", async (_, url) => {
   await shell.openExternal(url);
-});
-
-
-
-ipcMain.handle("open-about",async () => {
-   aboutWindow = new BrowserWindow({
-      maxWidth: 400,
-      maxHeight: 200,
-      frame: false,
-      parent: win,
-      modal: true,
-      webPreferences: {
-        contextIsolation: true,
-        enableRemoteModule: false,
-        preload: path.join(__dirname, "preload.js"),
-      },
-    });
-
-    //aboutWindow.openDevTools();
-    loadAngularRoute(aboutWindow, "about");
 });
 
 
