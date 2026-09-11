@@ -6,13 +6,13 @@
       <p style="color: var(--text-muted)">{{ aboutData().description }} </p>
       <p>{{ aboutData().version }} </p>
   </div>
-  <!-- Add buttons -->
+
   <div class="options-container">
     <button>Test</button>
     <button>Test</button>
   </div>
 
-  <div class="close">
+  <div class="close" (click)="onClose()">
     <button>
       <img src="close.svg">
     </button>
