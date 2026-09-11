@@ -23,5 +23,9 @@ export class Electron {
     return await (window as any).electronAPI.openExternalLink(link);
   }
 
+  async getHomework() {
+    return await (window as any).electronAPI.listHomework();
+  }
+
 
 }
