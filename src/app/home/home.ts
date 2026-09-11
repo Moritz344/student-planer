@@ -5,10 +5,13 @@ import { Settings } from '../settings';
 import { Grades } from '../grades/grades';
 import { Timetable } from '../timetable/timetable';
 import { Exams } from '../exams/exams';
+import { Dialog } from '../dialog/dialog';
+import { AboutDialog } from '../about-dialog/about-dialog';
+import { Homework } from './homework/homework';
 
 @Component({
   selector: 'app-home',
-  imports: [Topbar,Leftbar,Grades,Timetable,Exams],
+  imports: [Topbar,Leftbar,Grades,Timetable,Exams,Dialog,AboutDialog,Homework],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
