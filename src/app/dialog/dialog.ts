@@ -1,0 +1,10 @@
+import { Component, input, output, signal } from '@angular/core';
+
+@Component({
+  selector: 'app-dialog',
+  imports: [],
+  templateUrl: './dialog.html',
+  styleUrl: './dialog.css',
+})
+export class Dialog {
+}
