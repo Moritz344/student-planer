@@ -21,7 +21,7 @@ export class Menu {
   }
 
   onAbout() {
-    this.electron.openAbout();
+    this.settings.showAbout.set(true);
   }
 
   onExitProgram() {
