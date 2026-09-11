@@ -1,8 +1,12 @@
 <div class="container">
   <div class="container-item">
-    <button (click)="settings.view.set('home')" [class.selected]="settings.view() == 'home'"><img class="item-icon" src="today.svg">Home</button>
-    <button (click)="settings.view.set('timetable')" [class.selected]="settings.view() == 'timetable'"><img class="item-icon" src="timetable.svg">Stundenplan</button>
-    <button (click)="settings.view.set('exams')" [class.selected]="settings.view() == 'exams'"><img class="item-icon" src="exams.svg">Prüfungen</button>
-    <button (click)="settings.view.set('grades')" [class.selected]="settings.view() == 'grades'"><img class="item-icon" src="grades.svg">Noten</button>
+    <button (click)="settings.view.set('home')" [class.selected]="settings.view() == 'home'"><img class="item-icon" src="today.svg">
+      <span>Home</span></button>
+    <button (click)="settings.view.set('timetable')" [class.selected]="settings.view() == 'timetable'"><img class="item-icon" src="timetable.svg">
+      <span>Stundenplan</span></button>
+    <button (click)="settings.view.set('exams')" [class.selected]="settings.view() == 'exams'"><img class="item-icon" src="exams.svg">
+      <span>Prüfungen</span></button>
+    <button (click)="settings.view.set('grades')" [class.selected]="settings.view() == 'grades'"><img class="item-icon" src="grades.svg">
+      <span>Noten</span></button>
   </div>
 </div>
