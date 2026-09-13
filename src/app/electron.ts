@@ -27,5 +27,14 @@ export class Electron {
     return await (window as any).electronAPI.listHomework();
   }
 
+  async getSubjects() {
+    return await (window as any).electronAPI.listSubjects();
+  }
+
+  async getSubjectNameFromId(id: number) {
+    const subjects = await this.getSubjects()
+    return subjects.find((x: any) => x.id == id)
+  }
+
 
 }

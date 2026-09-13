@@ -56,6 +56,10 @@ ipcMain.handle("list-homework", async (_,) => {
   return db.listHomework();
 });
 
+ipcMain.handle("list-subjects", async (_,) => {
+  return db.listSubjects();
+});
+
 
 app.whenReady().then(async() => {
     createWindow();
