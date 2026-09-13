@@ -104,34 +104,7 @@ button:hover {
   filter: brightness(0) invert(1);
 }
 
-input[type="checkbox"] {
-  appearance: none;
-  box-sizing: border-box;
-  width: 20px;
-  height: 20px;
-  border: 1px solid var(--button-color);
-  border-radius: 4px;
-  position: relative;
-  cursor: pointer;
-  flex-shrink: 0;
-}
 
-input[type="checkbox"]:checked {
-  background: #3b82f6;
-  border-color: #3b82f6;
-}
-
-input[type="checkbox"]:checked::after {
-  content: "";
-  position: absolute;
-  left: 9px;
-  top: 1px;
-  width: 5px;
-  height: 10px;
-  border: solid white;
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
-}
 
 
 
