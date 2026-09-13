@@ -1,2 +1,24 @@
 <div class="container">
+  <div class="homework-container">
+    <h1 class="homework-header">Heute, {{ getDayNameFromId(today.getDay()) }}</h1>
+    @for (h of homeworkData(); track $index) {
+      <div class="homework-item">
+        <input type="checkbox" [(ngModel)]="h.completed" [checked]="false">
+        <div class="homework-item-row-1">
+          <span class="homework-name" [class.completed]="h.completed" >{{ h.name }}</span>
+          <span class="date">
+            @if (h.due_date == this.today.getTime()) {
+              heute um {{ h.due_date | date: 'HH:mm'}} Uhr
+            }@else {
+              {{ h.due_date | date:'dd.MM.yyyy'}}
+            }
+          </span>
+        </div>
+      </div>
+        @if (h.subject?.name) {
+          <span class="subject-name">{{ h.subject.name }}</span>
+        }
+        <hr>
+    }
+  </div>
 </div>

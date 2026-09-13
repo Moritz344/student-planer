@@ -1,0 +1,79 @@
+.container {
+  position: absolute;
+  top: 60px;
+  left: 210px;
+  right: 10px;
+  width: auto;
+}
+
+
+.homework-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: var(--bg-card);
+  height: auto;
+  max-height: 300px;
+  overflow-y: scroll;
+  padding: 20px;
+  border-radius: 10px;
+
+}
+
+.homework-header {
+  font-size: 30px;
+  margin: 0;
+}
+
+.homework-item-row-1 {
+  display: flex;
+  justify-content: space-between;
+}
+
+.subject-name {
+  margin-left: 46px;
+  float: left;
+  color: var(--text-muted);
+  margin-top: -20px;
+}
+
+.homework-item > div { flex: 1; }
+
+hr{
+  width: 100%;
+  border: none;
+  border-top: 1px solid grey;
+}
+
+.homework-item {
+  display: flex;
+}
+
+.homework-item .date{
+  color: var(--text-muted);
+}
+
+
+
+.homework-item input[type="checkbox"] {
+  display: flex;
+  background-color: black;
+  align-items: center;
+  margin-top: 10px;
+  width: 30px;
+  height: 20px;
+}
+
+
+.homework-name {
+  margin-left: 10px;
+  margin-bottom: 0px
+}
+
+
+.completed {
+  text-decoration: line-through;
+  color: var(--text-muted)
+}
