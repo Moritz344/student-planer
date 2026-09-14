@@ -1,6 +1,7 @@
 import { Component,signal,inject } from '@angular/core';
 import { Electron } from '../../electron';
 import { DatePipe } from '@angular/common';
+import { Dialog } from '../../dialog/dialog';
 import { FormsModule } from '@angular/forms';
 
 interface HomeworkEntry {
@@ -20,7 +21,7 @@ interface SubjectEntry {
 
 @Component({
   selector: 'app-homework',
-  imports: [DatePipe,FormsModule],
+  imports: [DatePipe,FormsModule,Dialog],
   templateUrl: './homework.html',
   styleUrl: './homework.css',
 })
@@ -29,7 +30,7 @@ export class Homework {
   public electron = inject(Electron);
   public today = new Date()
   public days = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
-
+  public showNewHomeworkDialog = signal<boolean>(false);
 
   constructor() {
     this.initData();
@@ -51,6 +52,11 @@ export class Homework {
     return this.days[id]
   }
 
-  updateCompletedStatus() {}
+  updateCompletedStatus(homework: HomeworkEntry) {
+    this.electron.updateHomeworkCompletedStatus({
+      id: homework.id,
+      completed: homework.completed
+    })
+  }
 
 }
