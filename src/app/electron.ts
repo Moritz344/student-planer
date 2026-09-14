@@ -36,5 +36,8 @@ export class Electron {
     return subjects.find((x: any) => x.id == id)
   }
 
+  async updateHomeworkCompletedStatus(homework: { id: number,completed: boolean}) {
+    return await (window as any).electronAPI.updateHomeworkStatus(homework);
+  }
 
 }
