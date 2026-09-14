@@ -55,7 +55,10 @@ hr{
   color: var(--text-muted);
 }
 
-
+.new-homework {
+  padding: 10px;
+  border: 1px solid white;
+}
 
 .homework-item input[type="checkbox"] {
   display: flex;
