@@ -1,9 +1,10 @@
 <div class="container">
   <div class="homework-container">
-    <h1 class="homework-header">Heute, {{ getDayNameFromId(today.getDay()) }}</h1>
+    <h1 class="homework-header">Heute,  {{ getDayNameFromId(today.getDay()) }}</h1>
+    <div style="position: absolute;right: 30px;top:20px"><button (click)="showNewHomeworkDialog.set(!showNewHomeworkDialog())" class="new-homework">Aufgabe</button></div>
     @for (h of homeworkData(); track $index) {
       <div class="homework-item">
-        <input type="checkbox" [(ngModel)]="h.completed" [checked]="false">
+        <input type="checkbox" [(ngModel)]="h.completed" (change)="updateCompletedStatus(h)" [checked]="false">
         <div class="homework-item-row-1">
           <span class="homework-name" [class.completed]="h.completed" >{{ h.name }}</span>
           <span class="date">
@@ -22,3 +23,7 @@
     }
   </div>
 </div>
+
+@if (showNewHomeworkDialog()) {
+  <app-dialog (close)="showNewHomeworkDialog.set(false)" header="Neue Hausaufgabe" type="new-homework"></app-dialog>
+}
