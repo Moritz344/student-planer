@@ -6,5 +6,6 @@ contextBridge.exposeInMainWorld("electronAPI", {
   getAboutData: () => ipcRenderer.invoke("get-about-data"),
   listSubjects: () => ipcRenderer.invoke("list-subjects"),
   listHomework: () => ipcRenderer.invoke("list-homework"),
+  updateHomeworkStatus: (homework) => ipcRenderer.invoke("update-homework-completed-status",homework),
   openExternalLink: (url) => ipcRenderer.invoke("open-external",url),
 });

@@ -56,6 +56,10 @@ ipcMain.handle("list-homework", async (_,) => {
   return db.listHomework();
 });
 
+ipcMain.handle("update-homework-completed-status", async (_,homework) => {
+  return db.updateHomeworkStatus(homework);
+});
+
 ipcMain.handle("list-subjects", async (_,) => {
   return db.listSubjects();
 });

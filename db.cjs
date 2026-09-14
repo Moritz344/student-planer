@@ -62,6 +62,11 @@ function listHomework() {
   return db.prepare("SELECT * FROM homework").all();
 }
 
+function updateHomeworkStatus(homework) {
+  db.prepare("UPDATE homework SET completed = ? WHERE id = ?")
+    .run(+homework.completed,homework.id)
+}
+
 
 db.exec(`CREATE TABLE IF NOT EXISTS grades (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -94,5 +99,6 @@ db.exec(`CREATE TABLE IF NOT EXISTS timetable (
 
 module.exports = {
   listHomework,
-  listSubjects
+  listSubjects,
+  updateHomeworkStatus
 }
