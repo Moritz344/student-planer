@@ -1,0 +1,63 @@
+.screen {
+  z-index: 1000;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+  opacity: 0.5;
+}
+
+.container {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  z-index: 1003;
+  width: 450px;
+  background-color: var(--about-bg);
+  z-index: 1003;
+  height: auto;
+  border-radius: 10px;
+}
+
+.new-homework-container {
+}
+
+.new-homework-header {
+  display: flex;
+  justify-content: center;
+  font-size: 25px;
+}
+
+.new-homework-entries {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  margin: 10px;
+}
+
+.options-container button:disabled {
+   pointer-events: none;
+  opacity: 0.6;
+  cursor: not-allowed;
+
+
+}
+
+.new-homework-entries input {
+}
+
+
+
+.options-container {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  float: right;
+  margin: 10px;
+}
+
+.options-container button {
+  padding: 10px;
+}

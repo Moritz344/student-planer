@@ -1,0 +1,20 @@
+<div class="screen"></div>
+<div class="container">
+  @if (type == "new-homework") {
+    <div class="new-homework-container">
+      <h1 class="new-homework-header">{{ header }}</h1>
+      <div class="new-homework-entries">
+        <input [(ngModel)]="newHomeworkData().name" spellcheck="false">
+        <select [(ngModel)]="newHomeworkData().fk_subject">
+          @for (subject of subjectsData(); track $index) {
+          <option [value]="subject.id">{{ subject.name }}</option>
+          }
+        </select>
+      </div>
+      <div class="options-container">
+        <button [disabled]="newHomeworkData().name == ''">Hinzufügen</button>
+        <button (click)="close.emit()">Abbrechen</button>
+      </div>
+    </div>
+  }
+</div>
