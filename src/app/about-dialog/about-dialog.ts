@@ -1,6 +1,7 @@
 import { Component, inject, OnInit, output, signal } from '@angular/core';
 import { Dialog } from '../dialog/dialog';
 import { Electron } from '../electron';
+import { Settings } from '../settings';
 
 export interface AboutData {
   name: string;
@@ -16,7 +17,8 @@ export interface AboutData {
   styleUrl: './about-dialog.css',
 })
 export class AboutDialog implements OnInit {
-  private electron = inject(Electron);
+  public electron = inject(Electron);
+  public settings = inject(Settings);
 
   aboutData = signal<any>([]);
   close = output<void>();
