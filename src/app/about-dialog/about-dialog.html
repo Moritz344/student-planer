@@ -1,21 +1,23 @@
-<div class="screen">
-</div>
-<div class="container">
-  <div class="container-content">
-      <h1>{{ aboutData().name }} </h1>
-      <p style="color: var(--text-muted)">{{ aboutData().description }} </p>
-      <p>{{ aboutData().version }} </p>
+@if (settings.showAbout()) {
+  <div class="screen">
   </div>
+  <div class="container" animate.enter="enter-animation" animate.leave="leave-animation"> 
+    <div class="container-content">
+        <h1>{{ aboutData().name }} </h1>
+        <p style="color: var(--text-muted)">{{ aboutData().description }} </p>
+        <p>{{ aboutData().version }} </p>
+    </div>
 
-  <div class="options-container">
-    <button>Test</button>
-    <button>Test</button>
-  </div>
+    <div class="options-container">
+      <button (click)="electron.openExternal('https://github.com/Moritz344')">Github</button>
+      <button>Test</button>
+    </div>
 
-  <div class="close" (click)="onClose()">
-    <button>
-      <img src="close.svg">
-    </button>
+    <div class="close" (click)="onClose()">
+      <button>
+        <img src="close.svg">
+      </button>
+    </div>
   </div>
-</div>
+}
 
