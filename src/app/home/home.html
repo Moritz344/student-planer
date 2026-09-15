@@ -13,7 +13,5 @@
 }
 
 
-@if (settings.showAbout()) {
-  <app-about-dialog (close)="settings.showAbout.set(false)"></app-about-dialog>
-}
+<app-about-dialog (close)="settings.showAbout.set(false)"></app-about-dialog>
 
