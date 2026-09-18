@@ -13,7 +13,8 @@
   top: 50%;
   transform: translate(-50%,-50%);
   z-index: 1003;
-  width: 450px;
+  width: auto;
+  min-width: 430px;
   background-color: var(--about-bg);
   z-index: 1003;
   height: auto;
@@ -23,7 +24,7 @@
 .new-homework-container {
 }
 
-.new-homework-header {
+.header {
   display: flex;
   justify-content: center;
   font-size: 25px;
@@ -45,8 +46,6 @@
 
 }
 
-.new-homework-entries input {
-}
 
 
 
@@ -61,3 +60,22 @@
 .options-container button {
   padding: 10px;
 }
+
+
+.delete-homework-content {
+  display: flex;
+  justify-content: center;
+  font-size: 24px;
+  padding: 20px;
+  margin-top: -20px;
+}
+
+.delete-homework-container {}
+
+.delete-homework-button {
+  background-color: var(--danger) ;
+}
+.delete-homework-button:hover {
+  background-color: var(--danger-hover)
+}
+
