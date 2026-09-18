@@ -1,20 +1,32 @@
 <div class="screen"></div>
 <div class="container">
-  @if (type == "new-homework") {
+  @if (dialogService.type() == "new-homework") {
     <div class="new-homework-container">
-      <h1 class="new-homework-header">{{ header }}</h1>
+      <h1 class="header">{{ dialogService.header() }}</h1>
       <div class="new-homework-entries">
         <input [(ngModel)]="newHomeworkData().name" spellcheck="false">
         <select [(ngModel)]="newHomeworkData().fk_subject">
-          @for (subject of subjectsData(); track $index) {
+          @for (subject of settings.subjectData(); track $index) {
           <option [value]="subject.id">{{ subject.name }}</option>
           }
         </select>
       </div>
       <div class="options-container">
-        <button [disabled]="newHomeworkData().name == ''">Hinzufügen</button>
-        <button (click)="close.emit()">Abbrechen</button>
+        <button [disabled]="newHomeworkData().name == ''" (click)="onAddHomework()">Hinzufügen</button>
+        <button (click)="dialogService.close()">Abbrechen</button>
       </div>
     </div>
+  }@else if (dialogService.type() == "delete-homework") {
+    <div class="delete-homework-container">
+      <h1 class="header">{{ dialogService.header() }}</h1>
+      <div class="delete-homework-content">
+        <span>Bist du sicher das du die  Hausaufgabe mit dem Titel <br> "{{ dialogService.homeworkDeleteData().name }}" löschen willst?</span>
+      </div>
+      <div class="options-container">
+        <button (click)="onDeleteHomework()" class="delete-homework-button">Löschen</button>
+        <button (click)="dialogService.close()">Abbrechen</button>
+      </div>
+    </div>
+ 
   }
 </div>
