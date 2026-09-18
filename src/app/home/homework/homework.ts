@@ -1,18 +1,12 @@
 import { Component,signal,inject } from '@angular/core';
 import { Electron } from '../../electron';
+import { Settings } from '../../settings';
 import { DatePipe } from '@angular/common';
 import { Dialog } from '../../dialog/dialog';
 import { FormsModule } from '@angular/forms';
+import { HomeworkEntry } from '../../types';
+import { DialogService } from '../../dialog/dialog-service';
 
-interface HomeworkEntry {
-  id: number,
-  name: string,
-  fk_subject: number,
-  due_date: number,
-  subject: { id: number,name: string },
-  completed: boolean
-
-}
 
 interface SubjectEntry {
   id: number,
@@ -26,26 +20,24 @@ interface SubjectEntry {
   styleUrl: './homework.css',
 })
 export class Homework {
-  public homeworkData = signal<HomeworkEntry[]>([]);
   public electron = inject(Electron);
+  public settings = inject(Settings);
+  public dialog = inject(DialogService);
+  public homeworkData = this.settings.homeworkData;
   public today = new Date()
   public days = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
-  public showNewHomeworkDialog = signal<boolean>(false);
 
   constructor() {
-    this.initData();
+    this.settings.initHomeworkData();
   }
 
-  async initData() {
-    this.homeworkData.set(await this.electron.getHomework());
-    for (const h of this.homeworkData()) {
-      const subject = await this.electron.getSubjectNameFromId(h.fk_subject);
-      this.homeworkData.update(list =>
-        list.map(item =>
-          item.id === h.id ? { ...item, subject } : item
-        ));
-    }
-    console.log("Homework:",this.homeworkData());
+  onDeleteHomework(homework: HomeworkEntry) {
+    this.dialog.open("Hausaufgabe löschen","delete-homework")
+    this.dialog.homeworkDeleteData.set(homework)
+  }
+
+  onAddHomework() {
+    this.dialog.open("Neue Hausaufgabe","new-homework")
   }
 
   getDayNameFromId(id: number) {
@@ -53,7 +45,7 @@ export class Homework {
   }
 
   updateCompletedStatus(homework: HomeworkEntry) {
-    this.electron.updateHomeworkCompletedStatus({
+    this.electron.updateHomework({
       id: homework.id,
       completed: homework.completed
     })
