@@ -26,6 +26,11 @@ db.exec(`CREATE TABLE IF NOT EXISTS homework (
   name TEXT NOT NULL
 )`);
 
+function resetSubjectTable() {
+  db.exec("DROP TABLE subjects")
+}
+
+
 function resetHomeworkTable() {
   db.exec("DROP TABLE homework")
 }
@@ -40,8 +45,8 @@ function createTestHomeworkData() {
 
 function initDefaultSubjects() {
   for (const s of defaultSubjects) {
-    db.prepare("INSERT INTO subjects (name,id) VALUES(?,?)")
-      .run(s.name,s.id)
+    db.prepare("INSERT INTO subjects (name,color,id) VALUES(?,?,?)")
+      .run(s.name,s.color,s.id)
   }
 }
 
@@ -62,11 +67,15 @@ function listHomework() {
   return db.prepare("SELECT * FROM homework").all();
 }
 
-function updateHomeworkStatus(homework) {
-  db.prepare("UPDATE homework SET completed = ? WHERE id = ?")
-    .run(+homework.completed,homework.id)
+function updateHomework(homework) {
+  if (homework.id != -1)  {
+    db.prepare("UPDATE homework SET completed = ? WHERE id = ?")
+      .run(+homework.completed,homework.id)
+  } else {
+    db.prepare("INSERT INTO homework (name,due_date,completed,fk_subject) VALUES(?,?,?,?)")
+      .run(homework.name,homework.due_date,+homework.completed,homework.fk_subject,)
+  }
 }
-
 
 db.exec(`CREATE TABLE IF NOT EXISTS grades (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -100,5 +109,5 @@ db.exec(`CREATE TABLE IF NOT EXISTS timetable (
 module.exports = {
   listHomework,
   listSubjects,
-  updateHomeworkStatus
+  updateHomework
 }
