@@ -15,7 +15,7 @@
   box-sizing: border-box;
   background-color: var(--bg-card);
   height: auto;
-  max-height: 300px;
+  max-height: 92vh;
   overflow-y: scroll;
   padding: 20px;
   border-radius: 10px;
@@ -29,9 +29,19 @@
 
 .homework-item-row-1 {
   display: flex;
+  flex: 1;
   justify-content: space-between;
 }
 
+.homework-item-row-1 .right-items {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  margin-left: auto;
+  gap: 10px;
+  color: var(--text-muted);
+}
 .subject-name {
   margin-left: 46px;
   float: left;
@@ -39,7 +49,6 @@
   margin-top: -20px;
 }
 
-.homework-item > div { flex: 1; }
 
 hr{
   width: 100%;
@@ -51,13 +60,21 @@ hr{
   display: flex;
 }
 
-.homework-item .date{
-  color: var(--text-muted);
-}
+
 
 .new-homework {
   padding: 10px;
-  border: 1px solid white;
+}
+
+.delete-homework {
+  padding: 10px;
+  width: auto;
+}
+
+.delete-homework img {
+  float: left;
+  width: 20px;
+  filter: brightness(0) invert(1);
 }
 
 .homework-item input[type="checkbox"] {
