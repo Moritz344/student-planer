@@ -8,6 +8,7 @@ import { Exams } from '../exams/exams';
 import { Dialog } from '../dialog/dialog';
 import { AboutDialog } from '../about-dialog/about-dialog';
 import { Homework } from './homework/homework';
+import { DialogService } from '../dialog/dialog-service';
 
 @Component({
   selector: 'app-home',
@@ -17,5 +18,6 @@ import { Homework } from './homework/homework';
 })
 export class Home {
   public settings = inject(Settings);
+  public dialog = inject(DialogService);
 
 }
