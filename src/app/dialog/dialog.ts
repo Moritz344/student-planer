@@ -1,6 +1,8 @@
 import { Component,inject, Input, Output, signal,OnInit,EventEmitter } from '@angular/core';
 import { Electron } from '../electron';
+import { Settings } from '../settings';
 import { FormsModule } from '@angular/forms';
+import { DialogService } from './dialog-service';
 
 @Component({
   selector: 'app-dialog',
@@ -9,15 +11,15 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './dialog.css',
 })
 export class Dialog implements OnInit {
-  @Input("type") type: string = "";
-  @Input("header") header: string = "";
-  @Output("close") close =  new EventEmitter<void>();
-
   public electron = inject(Electron);
-  public subjectsData = signal<any[]>([]);
+  public settings = inject(Settings);
+  public dialogService = inject(DialogService);
 
   public newHomeworkData = signal<any>({
+    id: -1,
     name: "",
+    due_date: 0,
+    completed: false,
     fk_subject: 1
   })
 
@@ -25,13 +27,17 @@ export class Dialog implements OnInit {
   }
 
   ngOnInit() {
-    if (this.type == "new-homework") {
-      this.initSubjects();
-    }
   }
 
-  async initSubjects() {
-    this.subjectsData.set(await this.electron.getSubjects());
+  async onAddHomework() {
+    await this.electron.updateHomework(this.newHomeworkData());
+    this.settings.initHomeworkData();
+    this.dialogService.close();
   }
+
+  async onDeleteHomework() {
+
+  }
+
 
 }
