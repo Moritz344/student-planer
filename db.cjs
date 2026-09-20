@@ -42,6 +42,13 @@ function createTestHomeworkData() {
   db.prepare("INSERT INTO homework (name,fk_subject,due_date) VALUES (?,?,?)").run("Nullstellen berechnen", 1, 1789141406837)
 }
 
+function createTestExamsData() {
+  db.prepare("INSERT INTO exams (description,fk_subject,date) VALUES (?,?,?)").run("Mathe Klassenarbeit", 1, 1789141406837)
+  db.prepare("INSERT INTO exams (description,fk_subject,date) VALUES (?,?,?)").run("Deutsch test", 2, 1789141406837)
+  db.prepare("INSERT INTO exams (description,fk_subject,date) VALUES (?,?,?)").run("Deutsch test", 2, 1789141406837)
+  db.prepare("INSERT INTO exams (description,fk_subject,date) VALUES (?,?,?)").run("Deutsch test", 2, 1789141406837)
+}
+
 
 function initDefaultSubjects() {
   for (const s of defaultSubjects) {
@@ -65,6 +72,15 @@ function listSubjects() {
 
 function listHomework() {
   return db.prepare("SELECT * FROM homework").all();
+}
+
+function listExam() {
+  return db.prepare("SELECT * FROM exams ORDER BY date").all();
+}
+
+function deleteHomework(id) {
+  console.log("homework id:",id);
+  db.prepare("DELETE FROM homework WHERE id = ?").run(id)
 }
 
 function updateHomework(homework) {
@@ -108,6 +124,8 @@ db.exec(`CREATE TABLE IF NOT EXISTS timetable (
 
 module.exports = {
   listHomework,
+  listExam,
   listSubjects,
-  updateHomework
+  updateHomework,
+  deleteHomework
 }
