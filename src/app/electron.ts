@@ -15,6 +15,14 @@ export class Electron {
     return await (window as any).electronAPI.getAboutData();
   }
 
+  deleteHomework(id: number) {
+    return (window as any).electronAPI.deleteHomework(id);
+  }
+
+  getExam() {
+    return (window as any).electronAPI.listExam();
+  }
+
   async minimize() {
     return await (window as any).electronAPI.minimize();
   }

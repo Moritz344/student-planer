@@ -52,8 +52,16 @@ ipcMain.handle("open-external", async (_, url) => {
   await shell.openExternal(url);
 });
 
+ipcMain.handle("delete-homework",(_,id) => {
+  db.deleteHomework(id)
+});
+
 ipcMain.handle("list-homework", async (_,) => {
   return db.listHomework();
+});
+
+ipcMain.handle("list-exam",(_) => {
+  return db.listExam();
 });
 
 ipcMain.handle("update-homework", async (_,homework) => {
