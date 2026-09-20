@@ -36,6 +36,10 @@ export class Dialog implements OnInit {
   }
 
   async onDeleteHomework() {
+    console.log(this.dialogService.homeworkDeleteData().id);
+    this.electron.deleteHomework(this.dialogService.homeworkDeleteData().id)
+    this.settings.initHomeworkData();
+    this.dialogService.close();
 
   }
 
