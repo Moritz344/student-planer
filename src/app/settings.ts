@@ -1,5 +1,5 @@
 import { Injectable,signal,inject } from '@angular/core';
-import { HomeworkEntry } from './types';
+import { HomeworkEntry,ExamEntry } from './types';
 import { Electron } from './electron';
 
 @Injectable({
@@ -11,6 +11,7 @@ export class Settings {
   public showAbout = signal<boolean>(false);
 
   public homeworkData = signal<HomeworkEntry[]>([]);
+  public examsData = signal<ExamEntry[]>([]);
   public subjectData = signal<any[]>([]);
 
   constructor() {
@@ -30,7 +31,11 @@ export class Settings {
 
   async initSubjectsData() {
     this.subjectData.set(await this.electron.getSubjects());
-    console.log(this.subjectData());
+  }
+
+  async initExamsData() {
+    this.examsData.set(await this.electron.getExam());
+    console.log(this.examsData());
   }
 
 }
