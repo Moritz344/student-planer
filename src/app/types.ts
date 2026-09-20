@@ -6,3 +6,9 @@ export interface HomeworkEntry {
   subject?: { id: number,name: string },
   completed: boolean
 }
+
+export interface ExamEntry {
+  fk_subject: number,
+  description: string,
+  date: number
+}
