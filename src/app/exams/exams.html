@@ -1,0 +1,9 @@
+<div class="container">
+  <div class="exams-container">
+    @for (e of settings.examsData(); track $index) {
+      <div class="exam-item">
+        {{ e.description }}
+      </div>
+    }
+  </div>
+</div>

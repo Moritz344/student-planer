@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component,inject } from '@angular/core';
+import { Electron } from '../electron';
+import { Settings } from '../settings';
 
 @Component({
   selector: 'app-exams',
@@ -7,5 +9,13 @@ import { Component } from '@angular/core';
   styleUrl: './exams.css',
 })
 export class Exams {
+  public electron = inject(Electron);
+  public settings = inject(Settings);
+
+  constructor() {
+    this.settings.initExamsData();
+  }
+
+
 
 }
