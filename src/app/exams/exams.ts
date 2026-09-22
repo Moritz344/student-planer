@@ -4,6 +4,9 @@ import { Settings } from '../settings';
 import { DatePipe } from '@angular/common';
 import { ExamEntry } from '../types';
 
+// TODO: add new exam
+// TODO: delete exam
+
 @Component({
   selector: 'app-exams',
   imports: [DatePipe],
