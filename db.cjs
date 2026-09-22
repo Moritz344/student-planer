@@ -43,10 +43,8 @@ function createTestHomeworkData() {
 }
 
 function createTestExamsData() {
-  db.prepare("INSERT INTO exams (description,fk_subject,date) VALUES (?,?,?)").run("Mathe Klassenarbeit", 1, 1789141406837)
-  db.prepare("INSERT INTO exams (description,fk_subject,date) VALUES (?,?,?)").run("Deutsch test", 2, 1789141406837)
-  db.prepare("INSERT INTO exams (description,fk_subject,date) VALUES (?,?,?)").run("Deutsch test", 2, 1789141406837)
-  db.prepare("INSERT INTO exams (description,fk_subject,date) VALUES (?,?,?)").run("Deutsch test", 2, 1789141406837)
+  db.prepare("INSERT INTO exams (description,fk_subject,date) VALUES (?,?,?)").run("Mathe Klassenarbeit", 1, 1790114400000)
+  db.prepare("INSERT INTO exams (description,fk_subject,date) VALUES (?,?,?)").run("Mathe Klassenarbeit", 1,1791756000000)
 }
 
 
@@ -75,7 +73,7 @@ function listHomework() {
 }
 
 function listExam() {
-  return db.prepare("SELECT * FROM exams ORDER BY date").all();
+  return db.prepare("SELECT * FROM exams").all();
 }
 
 function deleteHomework(id) {
