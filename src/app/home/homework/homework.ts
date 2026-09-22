@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { HomeworkEntry } from '../../types';
 import { DialogService } from '../../dialog/dialog-service';
 
+// TODO: add date input 
 
 @Component({
   selector: 'app-homework',
