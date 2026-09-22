@@ -10,5 +10,6 @@ export interface HomeworkEntry {
 export interface ExamEntry {
   fk_subject: number,
   description: string,
+  daysLeft?: number,
   date: number
 }
