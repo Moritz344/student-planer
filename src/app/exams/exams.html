@@ -2,7 +2,30 @@
   <div class="exams-container">
     @for (e of settings.examsData(); track $index) {
       <div class="exam-item">
-        {{ e.description }}
+        <div class="item-left">
+          <span [class.completed]="e.daysLeft && e.daysLeft < 0">{{ e.description }}</span>
+          <span style="color: var(--text-muted)">{{ e.date | date: 'EEEE dd.MM HH:MM'}}</span>
+        </div>
+        <span class="item-right"
+        [class.finished]="e.daysLeft != undefined && e.daysLeft < 0"
+        [class.today]="e.daysLeft != undefined && e.daysLeft == 0"
+        [class.tomorrow]="e.daysLeft != undefined && e.daysLeft == 1"
+        [class.days]="e.daysLeft != undefined && e.daysLeft > 1"
+        >
+        @if (e.daysLeft != undefined) {
+          @if (e.daysLeft < 0) {
+            Erledigt
+          }@else if (e.daysLeft == 0) {
+            Heute
+          }@else if (e.daysLeft == 1) {
+            Morgen
+          } @else {
+            in
+            {{ e.daysLeft }} 
+            Tagen
+          }
+        }
+        </span>
       </div>
     }
   </div>

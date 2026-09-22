@@ -16,11 +16,65 @@
 }
 
 .exam-item {
+  display: flex;
+  flex-direction: column;
   box-sizing: border-box;
   width: auto;
-  min-height: 150px;
+  min-height: 100px;
   height: auto;
   background-color: var(--bg-card);
   padding: 10px;
+  border-radius: 10px;
+}
+
+.item-left {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 250px;
+}
+
+
+
+.completed {
+  text-decoration: line-through;
+  color: var(--text-muted)
+}
+
+.exam-item .item-right {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  margin-left: auto;
+  position: absolute;
+  margin-top: 30px;
+  margin-right: 10px;
+  right: 10px;
+  gap: 10px;
+}
+
+.finished {
+  background-color: green;
+  padding: 6px;
+  border-radius: 10px;
+}
+
+.today {
+  background-color: red;
+  padding: 6px;
+  border-radius: 10px;
+}
+
+.tomorrow {
+  background-color: var(--yellow);
+  padding: 6px;
+  border-radius: 10px;
+
+}
+
+.days {
+  background-color: var(--yellow);
+  padding: 6px;
   border-radius: 10px;
 }
