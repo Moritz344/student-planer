@@ -36,10 +36,8 @@ function resetHomeworkTable() {
 }
 
 function createTestHomeworkData() {
-  db.prepare("INSERT INTO homework (name,fk_subject,due_date) VALUES (?,?,?)").run("Nullstellen berechnen", 1, 1789141406837)
-  db.prepare("INSERT INTO homework (name,fk_subject,due_date) VALUES (?,?,?)").run("Nullstellen berechnen", 1, 1789141406837)
-  db.prepare("INSERT INTO homework (name,fk_subject,due_date) VALUES (?,?,?)").run("Nullstellen berechnen", 1, 1789141406837)
-  db.prepare("INSERT INTO homework (name,fk_subject,due_date) VALUES (?,?,?)").run("Nullstellen berechnen", 1, 1789141406837)
+  db.prepare("INSERT INTO homework (name,fk_subject,due_date) VALUES (?,?,?)").run("Nullstellen berechnen", 1, 1791756000000 )
+  db.prepare("INSERT INTO homework (name,fk_subject,due_date) VALUES (?,?,?)").run("Nullstellen berechnen", 1,1790114400000)
 }
 
 function createTestExamsData() {
@@ -69,7 +67,7 @@ function listSubjects() {
 }
 
 function listHomework() {
-  return db.prepare("SELECT * FROM homework").all();
+  return db.prepare("SELECT * FROM homework ORDER BY CAST(due_date AS INTEGER)").all();
 }
 
 function listExam() {
@@ -77,7 +75,6 @@ function listExam() {
 }
 
 function deleteHomework(id) {
-  console.log("homework id:",id);
   db.prepare("DELETE FROM homework WHERE id = ?").run(id)
 }
 
