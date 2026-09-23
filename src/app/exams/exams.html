@@ -5,8 +5,17 @@
   <div class="exams-container">
     @for (e of settings.examsData(); track $index) {
       <div class="exam-item">
+        <div class="slim-rect">
+        <img class="item-icon"
+        [class.green]="e.subjectData.color == 'green'"
+        [class.blue]="e.subjectData.color == 'blue'"
+        [class.yellow]="e.subjectData.color == 'yellow'"
+        [class.gray]="e.subjectData.color == 'gray'"
+        [class.red]="e.subjectData.color == 'red'"
+        src="dot.svg" >
+        </div>
         <div class="item-left">
-          <span [class.completed]="e.daysLeft && e.daysLeft < 0">{{e.subjectName }} - {{ e.description }}</span>
+          <span [class.completed]="e.daysLeft && e.daysLeft < 0">{{e.subjectData.name }} - {{ e.description }}</span>
           <span style="color: var(--text-muted)">{{ e.date | date: 'EEEE dd.MM '}}</span>
         </div>
         <span class="item-right"
