@@ -24,7 +24,7 @@ export class Settings {
       this.homeworkData.update(list =>
         list.map(item => ({
             ...item,
-            subjectName: this.getSubjectNameFromId(item.fk_subject) 
+            subjectData: this.getSubjectDataFromId(item.fk_subject) 
         }))
     )
     }
@@ -35,8 +35,8 @@ export class Settings {
     this.subjectData.set(await this.electron.getSubjects());
   }
 
-  getSubjectNameFromId(id: number) {
-    return this.subjectData().find(s => s.id == id).name;
+  getSubjectDataFromId(id: number) {
+    return this.subjectData().find(s => s.id == id);
   }
 
   async initExamsData() {
@@ -45,7 +45,7 @@ export class Settings {
       exam.map(item => ({
         ...item,
         daysLeft: Math.ceil((Number(item.date) - Date.now()) / 86400000) || 0,
-        subjectName: this.getSubjectNameFromId(item.fk_subject)
+        subjectData: this.getSubjectDataFromId(item.fk_subject)
       }))
     )
     this.sortExamEntriesByClosestDate();

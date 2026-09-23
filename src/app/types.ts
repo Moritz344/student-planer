@@ -3,7 +3,7 @@ export interface HomeworkEntry {
   name: string,
   fk_subject: number,
   due_date: number,
-  subjectName?: string,
+  subjectData?: any,
   completed: boolean
 }
 
@@ -11,6 +11,6 @@ export interface ExamEntry {
   fk_subject: number,
   description: string,
   daysLeft?: number,
-  subjectName?: string,
+  subjectData?: any,
   date: number
 }
