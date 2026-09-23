@@ -1,0 +1,57 @@
+<div class="datepicker">
+  <input
+    class="datepicker-input"
+    [ngModel]="text()"
+    (ngModelChange)="onTextChange($event)"
+    placeholder="TT.MM.JJJJ"
+    spellcheck="false"
+  />
+  <button type="button" class="datepicker-button" (click)="toggle()" aria-label="Kalender öffnen">
+    <svg
+      class="datepicker-icon"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+      <line x1="16" y1="2" x2="16" y2="6"></line>
+      <line x1="8" y1="2" x2="8" y2="6"></line>
+      <line x1="3" y1="10" x2="21" y2="10"></line>
+    </svg>
+  </button>
+
+  @if (show()) {
+    <div class="datepicker-overlay" (click)="close()"></div>
+    <div class="datepicker-calendar enter-animation">
+      <div class="calendar-header">
+        <button type="button" class="calendar-nav" (click)="prevMonth()">&#8249;</button>
+        <span class="calendar-label">{{ months[viewMonth().getMonth()] }} {{ viewMonth().getFullYear() }}</span>
+        <button type="button" class="calendar-nav" (click)="nextMonth()">&#8250;</button>
+      </div>
+      <div class="calendar-weekdays">
+        @for (weekday of weekdays; track $index) {
+          <span>{{ weekday }}</span>
+        }
+      </div>
+      <div class="calendar-days">
+        @for (week of weeks(); track $index) {
+          @for (day of week; track $index) {
+            <button
+              type="button"
+              class="calendar-day"
+              [class.dimmed]="isDimmed(day.date)"
+              [class.today]="isToday(day.date)"
+              [class.selected]="isSelected(day.date)"
+              (click)="select(day.date)"
+            >
+              {{ day.date.getDate() }}
+            </button>
+          }
+        }
+      </div>
+    </div>
+  }
+</div>
