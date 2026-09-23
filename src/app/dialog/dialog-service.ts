@@ -24,6 +24,8 @@ export class DialogService {
 
 
   close() {
+    this.type.set("");
+    this.header.set("");
     this.show.set(false);
   }
 
