@@ -7,6 +7,15 @@
   width: auto;
 }
 
+.container-options {
+  display: flex;
+  justify-content: right;
+}
+.container-options button{
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
 .exams-container {
   display: flex;
   flex-direction: column;
