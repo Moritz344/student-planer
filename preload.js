@@ -9,5 +9,6 @@ contextBridge.exposeInMainWorld("electronAPI", {
   listExam: () => ipcRenderer.invoke("list-exam"),
   deleteHomework: (id) => ipcRenderer.invoke("delete-homework",id),
   updateHomework: (homework) => ipcRenderer.invoke("update-homework",homework),
+  newExam: (exam) => ipcRenderer.invoke("new-exam",exam),
   openExternalLink: (url) => ipcRenderer.invoke("open-external",url),
 });

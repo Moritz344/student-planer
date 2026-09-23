@@ -88,6 +88,11 @@ function updateHomework(homework) {
   }
 }
 
+function newExam(exam) {
+  db.prepare("INSERT INTO exams (fk_subject,description,date) VALUES(?,?,?)").run(exam.fk_subject,exam.description,exam.date)
+}
+
+
 db.exec(`CREATE TABLE IF NOT EXISTS grades (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     fk_subject INTEGER REFERENCES subjects(id) ON DELETE CASCADE,
@@ -122,5 +127,6 @@ module.exports = {
   listExam,
   listSubjects,
   updateHomework,
-  deleteHomework
+  deleteHomework,
+  newExam
 }
