@@ -41,11 +41,14 @@
           <option [value]="subject.id">{{ subject.name }}</option>
         }
         </select>
-        <span>Datum</span>
+        <span>Datum 
+        </span>
         <app-datepicker [(value)]="newExamData().date"></app-datepicker>
       </div>
       <div class="options-container">
-        <button (click)="onAddExam()" [disabled]="newExamData().description == ''">Hinzufügen</button>
+        <button (click)="onAddExam()" [disabled]="newExamData().description == '' || newExamData().date == null || newExamData().date == ''">Hinzufügen
+
+        </button>
         <button (click)="dialogService.close()">Abbrechen</button>
       </div>
     </div>
