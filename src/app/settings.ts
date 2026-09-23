@@ -21,11 +21,12 @@ export class Settings {
   async initHomeworkData() {
     this.homeworkData.set(await this.electron.getHomework());
     for (const h of this.homeworkData()) {
-      const subject = await this.electron.getSubjectNameFromId(h.fk_subject);
       this.homeworkData.update(list =>
-        list.map(item =>
-          item.id === h.id ? { ...item, subject } : item
-        ));
+        list.map(item => ({
+            ...item,
+            subjectName: this.getSubjectNameFromId(item.fk_subject) 
+        }))
+    )
     }
     this.sortHomeworkDataByClosestDate();
   }
@@ -34,12 +35,17 @@ export class Settings {
     this.subjectData.set(await this.electron.getSubjects());
   }
 
+  getSubjectNameFromId(id: number) {
+    return this.subjectData().find(s => s.id == id).name;
+  }
+
   async initExamsData() {
     this.examsData.set(await this.electron.getExam());
     this.examsData.update(exam => 
       exam.map(item => ({
         ...item,
-        daysLeft: Math.ceil((Number(item.date) - Date.now()) / 86400000) || 0
+        daysLeft: Math.ceil((Number(item.date) - Date.now()) / 86400000) || 0,
+        subjectName: this.getSubjectNameFromId(item.fk_subject)
       }))
     )
     this.sortExamEntriesByClosestDate();
