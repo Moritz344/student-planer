@@ -1,10 +1,13 @@
 <div class="container">
+<div class="container-options">
+  <button (click)="onNewExam()">Neue Prüfung</button>
+</div>
   <div class="exams-container">
     @for (e of settings.examsData(); track $index) {
       <div class="exam-item">
         <div class="item-left">
           <span [class.completed]="e.daysLeft && e.daysLeft < 0">{{ e.description }}</span>
-          <span style="color: var(--text-muted)">{{ e.date | date: 'EEEE dd.MM HH:MM'}}</span>
+          <span style="color: var(--text-muted)">{{ e.date | date: 'EEEE dd.MM '}}</span>
         </div>
         <span class="item-right"
         [class.finished]="e.daysLeft != undefined && e.daysLeft < 0"
