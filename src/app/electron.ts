@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable,inject } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
@@ -41,11 +41,6 @@ export class Electron {
 
   async getSubjects() {
     return await (window as any).electronAPI.listSubjects();
-  }
-
-  async getSubjectNameFromId(id: number) {
-    const subjects = await this.getSubjects()
-    return subjects.find((x: any) => x.id == id)
   }
 
   async updateHomework(homework: any) {
