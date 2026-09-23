@@ -101,14 +101,6 @@ button:hover {
   animation: 0.2s fadeOut ease-out;
 }
 
-.white-img{
-  filter: brightness(0) invert(1);
-}
-
-
-
-
-
 
 .loading-container {
   position: absolute;
