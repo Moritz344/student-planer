@@ -6,7 +6,7 @@
     @for (e of settings.examsData(); track $index) {
       <div class="exam-item">
         <div class="item-left">
-          <span [class.completed]="e.daysLeft && e.daysLeft < 0">{{ e.description }}</span>
+          <span [class.completed]="e.daysLeft && e.daysLeft < 0">{{e.subjectName }} - {{ e.description }}</span>
           <span style="color: var(--text-muted)">{{ e.date | date: 'EEEE dd.MM '}}</span>
         </div>
         <span class="item-right"
