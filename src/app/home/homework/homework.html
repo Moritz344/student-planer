@@ -6,6 +6,13 @@
       @for (h of homeworkData(); track $index) {
         <div class="homework-item">
           <input type="checkbox" [(ngModel)]="h.completed" (change)="updateCompletedStatus(h)" [checked]="false">
+        <img class="item-icon"
+        [class.green]="h.subjectData.color == 'green'"
+        [class.blue]="h.subjectData.color == 'blue'"
+        [class.yellow]="h.subjectData.color == 'yellow'"
+        [class.gray]="h.subjectData.color == 'gray'"
+        [class.red]="h.subjectData.color == 'red'"
+        src="dot.svg" >
           <div class="homework-item-row-1">
             <span class="homework-name" [class.completed]="h.completed" >{{ h.name }}</span>
             <div class="right-items">
@@ -20,8 +27,8 @@
             </div>
           </div>
         </div>
-          @if (h.subjectName) {
-            <span class="subject-name">{{ h.subjectName }}</span>
+          @if (h.subjectData) {
+            <span class="subject-name">{{ h.subjectData.name }}</span>
           }
           <hr>
       }
