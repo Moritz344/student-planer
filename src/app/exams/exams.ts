@@ -3,9 +3,11 @@ import { Electron } from '../electron';
 import { Settings } from '../settings';
 import { DatePipe } from '@angular/common';
 import { ExamEntry } from '../types';
+import { DialogService } from '../dialog/dialog-service';
 
-// TODO: add new exam
 // TODO: delete exam
+// TODO: Raum? Uhrzeit?
+// TODO: Fach anzeigen durch farbe und name
 
 @Component({
   selector: 'app-exams',
@@ -16,34 +18,15 @@ import { ExamEntry } from '../types';
 export class Exams {
   public electron = inject(Electron);
   public settings = inject(Settings);
+  public dialog = inject(DialogService)
 
   constructor() {
-    this.settings.initExamsData().then(
-      () => {
-        this.calculateDaysLeftForExam()
-        this.sortExamEntriesByClosestDate()
-      }
-    );
+    this.settings.initExamsData();
   }
 
-  sortExamEntriesByClosestDate() {
-    this.settings.examsData.update(list =>
-      [...list].sort((a: ExamEntry, b: ExamEntry) => {
-        const an = Number(a.daysLeft)
-        const bn = Number(b.daysLeft);
-        if ((an >= 0) !== (bn >= 0)) return an >= 0 ? -1 : 1;
-        return an - bn;
-      })
-    );
-  }
-
-  calculateDaysLeftForExam() {
-      this.settings.examsData.update(exam => 
-        exam.map(item => ({
-          ...item,
-          daysLeft: Math.ceil((Number(item.date) - Date.now()) / 86400000) || 0
-        }))
-      )
+  onNewExam() {
+    this.dialog.open("Neue Prüfung","new-exam")
+    this.dialog.show.set(true);
   }
 
 
