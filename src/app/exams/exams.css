@@ -5,6 +5,7 @@
   right: 10px;
   margin: 10px;
   width: auto;
+  user-select: none;
 }
 
 .container-options {
