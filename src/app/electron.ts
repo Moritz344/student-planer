@@ -35,6 +35,10 @@ export class Electron {
     return await (window as any).electronAPI.listHomework();
   }
 
+  async newExam(exam: any) {
+    return await (window as any).electronAPI.newExam(exam);
+  }
+
   async getSubjects() {
     return await (window as any).electronAPI.listSubjects();
   }
