@@ -3,10 +3,11 @@ import { Electron } from '../electron';
 import { Settings } from '../settings';
 import { FormsModule } from '@angular/forms';
 import { DialogService } from './dialog-service';
+import { Datepicker } from '../datepicker/datepicker';
 
 @Component({
   selector: 'app-dialog',
-  imports: [FormsModule],
+  imports: [FormsModule, Datepicker],
   templateUrl: './dialog.html',
   styleUrl: './dialog.css',
 })
@@ -23,6 +24,13 @@ export class Dialog implements OnInit {
     fk_subject: 1
   })
 
+  public newExamData = signal<any>({
+    id: -1,
+    description: "",
+    date: 0,
+    fk_subject: 1
+  })
+
   constructor() {
   }
 
@@ -32,6 +40,12 @@ export class Dialog implements OnInit {
   async onAddHomework() {
     await this.electron.updateHomework(this.newHomeworkData());
     this.settings.initHomeworkData();
+    this.dialogService.close();
+  }
+
+  async onAddExam() {
+    await this.electron.newExam(this.newExamData());
+    await this.settings.initExamsData();
     this.dialogService.close();
   }
 

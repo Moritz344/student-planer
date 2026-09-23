@@ -5,11 +5,12 @@
       <h1 class="header">{{ dialogService.header() }}</h1>
       <div class="new-homework-entries">
         <input [(ngModel)]="newHomeworkData().name" spellcheck="false">
-        <select [(ngModel)]="newHomeworkData().fk_subject">
+        <select [(ngModel)]="newHomeworkData().fk_subject" style="font-size: 20px">
           @for (subject of settings.subjectData(); track $index) {
           <option [value]="subject.id">{{ subject.name }}</option>
           }
         </select>
+        <app-datepicker [(value)]="newHomeworkData().due_date"></app-datepicker>
       </div>
       <div class="options-container">
         <button [disabled]="newHomeworkData().name == ''" (click)="onAddHomework()">Hinzufügen</button>
@@ -17,9 +18,9 @@
       </div>
     </div>
   }@else if (dialogService.type() == "delete-homework") {
-    <div class="delete-homework-container">
+    <div>
       <h1 class="header">{{ dialogService.header() }}</h1>
-      <div class="delete-homework-content">
+      <div class="content">
         <span>Bist du sicher das du die  Hausaufgabe mit dem Titel <br> "{{ dialogService.homeworkDeleteData().name }}" löschen willst?</span>
       </div>
       <div class="options-container">
@@ -28,5 +29,25 @@
       </div>
     </div>
  
+  }@else if (dialogService.type() == "new-exam") {
+    <div>
+      <h1 class="header">{{ dialogService.header() }}</h1>
+      <div class="new-content">
+        <span>Name</span>
+        <input [(ngModel)]="newExamData().description" spellcheck="false">
+        <span>Fach</span>
+        <select [(ngModel)]="newExamData().fk_subject" style="font-size: 20px">
+        @for (subject of settings.subjectData(); track $index) {
+          <option [value]="subject.id">{{ subject.name }}</option>
+        }
+        </select>
+        <span>Datum</span>
+        <app-datepicker [(value)]="newExamData().date"></app-datepicker>
+      </div>
+      <div class="options-container">
+        <button (click)="onAddExam()" [disabled]="newExamData().description == ''">Hinzufügen</button>
+        <button (click)="dialogService.close()">Abbrechen</button>
+      </div>
+    </div>
   }
 </div>
