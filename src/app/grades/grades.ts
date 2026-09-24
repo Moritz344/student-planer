@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component,inject } from '@angular/core';
+import { Settings } from '../settings';
 
 @Component({
   selector: 'app-grades',
@@ -7,5 +8,10 @@ import { Component } from '@angular/core';
   styleUrl: './grades.css',
 })
 export class Grades {
+  public settings = inject(Settings)
 
+  constructor() {}
+
+
+  calculateAverageGrade() {}
 }
