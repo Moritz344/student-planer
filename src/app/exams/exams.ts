@@ -21,7 +21,8 @@ export class Exams {
   public dialog = inject(DialogService)
 
   constructor() {
-    this.settings.initExamsData();
+    this.settings.initExamsData().then(() =>  console.log(this.settings.examsData()));
+    
   }
 
   onNewExam() {
