@@ -64,6 +64,50 @@ input {
 }
 
 
+.grade-container {
+  display: grid;
+  grid-template-columns: repeat(6,60px);
+}
+
+
+.grade-item .red {
+  background-color: var(--danger);
+}
+
+.grade-item .red:hover{
+  background-color: var(--danger-hover);
+}
+
+.grade-item .yellow {
+  background-color: var(--yellow)
+}
+
+.grade-item .yellow:hover {
+  background-color: var(--yellow-hover);
+}
+
+.grade-item .orange {
+  background-color: var(--orange)
+}
+
+.grade-item .orange:hover {
+  background-color: var(--orange-hover);
+}
+
+.grade-item .green {
+  background-color: var(--green-button);
+}
+
+.grade-item .green:hover{
+  background-color: var(--green-hover);
+}
+
+.grade-item button {
+  width: 50px;
+  padding: 10px;
+}
+
+
 .content {
   display: flex;
   justify-content: center;

@@ -4,6 +4,7 @@ import { Settings } from '../settings';
 import { FormsModule } from '@angular/forms';
 import { DialogService } from './dialog-service';
 import { Datepicker } from '../datepicker/datepicker';
+import { HomeworkEntry,ExamEntry } from '../types';
 
 @Component({
   selector: 'app-dialog',
@@ -16,7 +17,7 @@ export class Dialog implements OnInit {
   public settings = inject(Settings);
   public dialogService = inject(DialogService);
 
-  public newHomeworkData = signal<any>({
+  public newHomeworkData = signal<HomeworkEntry>({
     id: -1,
     name: "",
     due_date: 0,
@@ -24,11 +25,19 @@ export class Dialog implements OnInit {
     fk_subject: 1
   })
 
-  public newExamData = signal<any>({
+  public newExamData = signal<ExamEntry>({
     id: -1,
     description: "",
     date: 0,
     fk_subject: 1
+  })
+
+  public grades = signal<number[]>([1,2,3,4,5,6])
+
+  public newGradeData = signal<any>({
+    id: -1,
+    fk_subject: 0,
+    grade: 0
   })
 
   constructor() {
@@ -37,9 +46,19 @@ export class Dialog implements OnInit {
   ngOnInit() {
   }
 
+  onSelectGrade(grade: number) {
+    this.newGradeData().grade = grade;
+  }
+
   async onAddHomework() {
     await this.electron.updateHomework(this.newHomeworkData());
     this.settings.initHomeworkData();
+    this.dialogService.close();
+  }
+
+  async onAddGrade() {
+    await this.electron.updateGrade(this.newGradeData());
+    this.settings.initGradesData();
     this.dialogService.close();
   }
 
