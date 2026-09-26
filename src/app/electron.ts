@@ -1,4 +1,5 @@
-import { Injectable,inject } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { ExamEntry,HomeworkEntry,GradeEntry, SubjectEntry } from './types';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +20,7 @@ export class Electron {
     return (window as any).electronAPI.deleteHomework(id);
   }
 
-  getExam() {
+  getExam(): Promise<ExamEntry[]> {
     return (window as any).electronAPI.listExam();
   }
 
@@ -31,27 +32,27 @@ export class Electron {
     return await (window as any).electronAPI.openExternalLink(link);
   }
 
-  async getHomework() {
+  async getHomework(): Promise<HomeworkEntry[]> {
     return await (window as any).electronAPI.listHomework();
   }
 
-  async newExam(exam: any) {
+  async newExam(exam: ExamEntry) {
     return await (window as any).electronAPI.newExam(exam);
   }
 
-  async getSubjects() {
+  async getSubjects(): Promise<SubjectEntry[]> {
     return await (window as any).electronAPI.listSubjects();
   }
 
-  async getGrades() {
+  async getGrades(): Promise<GradeEntry[]> {
     return await (window as any).electronAPI.listGrades();
   }
 
-  async updateGrade(grade: any) {
+  async updateGrade(grade: GradeEntry) {
     return await (window as any).electronAPI.updateGrade(grade);
   }
 
-  async updateHomework(homework: any) {
+  async updateHomework(homework: { id: number,completed: boolean}) {
     return await (window as any).electronAPI.updateHomework(homework);
   }
 
