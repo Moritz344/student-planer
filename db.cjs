@@ -26,6 +26,31 @@ db.exec(`CREATE TABLE IF NOT EXISTS homework (
   name TEXT NOT NULL
 )`);
 
+db.exec(`CREATE TABLE IF NOT EXISTS grades (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    fk_subject INTEGER REFERENCES subjects(id) ON DELETE CASCADE,
+    grade REAL NOT NULL,
+  );
+`);
+
+db.exec(`CREATE TABLE IF NOT EXISTS exams (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    fk_subject INTEGER REFERENCES subjects(id) ON DELETE CASCADE,
+    description TEXT,
+    date TEXT DEFAULT CURRENT_TIMESTAMP
+  );
+`);
+
+db.exec(`CREATE TABLE IF NOT EXISTS timetable (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    fk_subject INTEGER REFERENCES subjects(id) ON DELETE CASCADE,
+    day INTEGER NOT NULL,
+    start_time TEXT NOT NULL,
+    end_time TEXT NOT NULL,
+    room TEXT
+  );
+`);
+
 function resetSubjectTable() {
   db.exec("DROP TABLE subjects")
 }
@@ -78,6 +103,18 @@ function deleteHomework(id) {
   db.prepare("DELETE FROM homework WHERE id = ?").run(id)
 }
 
+function updateGrade(grade) {
+  if (grade.id != -1) {
+    db.prepare("UPDATE grades SET grade = ? WHERE id = ?").run(grade.grade,grade.id);
+  } else {
+    db.prepare("INSERT INTO grades (fk_subject,grade) VALUES(?,?)").run(grade.fk_subject,grade.grade)
+  }
+}
+
+function listGrades() {
+  return db.prepare("SELECT * FROM grades").all()
+}
+
 function updateHomework(homework) {
   if (homework.id != -1)  {
     db.prepare("UPDATE homework SET completed = ? WHERE id = ?")
@@ -93,40 +130,16 @@ function newExam(exam) {
 }
 
 
-db.exec(`CREATE TABLE IF NOT EXISTS grades (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    fk_subject INTEGER REFERENCES subjects(id) ON DELETE CASCADE,
-    grade REAL NOT NULL,
-    name TEXT,
-    date TEXT DEFAULT CURRENT_TIMESTAMP
-  );
-`);
-
-db.exec(`CREATE TABLE IF NOT EXISTS exams (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    fk_subject INTEGER REFERENCES subjects(id) ON DELETE CASCADE,
-    description TEXT,
-    date TEXT DEFAULT CURRENT_TIMESTAMP
-  );
-`);
-
-db.exec(`CREATE TABLE IF NOT EXISTS timetable (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    fk_subject INTEGER REFERENCES subjects(id) ON DELETE CASCADE,
-    day INTEGER NOT NULL,
-    start_time TEXT NOT NULL,
-    end_time TEXT NOT NULL,
-    room TEXT
-  );
-`);
 
 
 
 module.exports = {
   listHomework,
   listExam,
+  listGrades,
   listSubjects,
   updateHomework,
+  updateGrade,
   deleteHomework,
   newExam
 }

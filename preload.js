@@ -7,8 +7,10 @@ contextBridge.exposeInMainWorld("electronAPI", {
   listSubjects: () => ipcRenderer.invoke("list-subjects"),
   listHomework: () => ipcRenderer.invoke("list-homework"),
   listExam: () => ipcRenderer.invoke("list-exam"),
+  listGrades: () => ipcRenderer.invoke("list-grades"),
   deleteHomework: (id) => ipcRenderer.invoke("delete-homework",id),
   updateHomework: (homework) => ipcRenderer.invoke("update-homework",homework),
+  updateGrade: (grade) => ipcRenderer.invoke("update-grade",grade),
   newExam: (exam) => ipcRenderer.invoke("new-exam",exam),
   openExternalLink: (url) => ipcRenderer.invoke("open-external",url),
 });

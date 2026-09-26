@@ -68,12 +68,20 @@ ipcMain.handle("update-homework", async (_,homework) => {
   return db.updateHomework(homework);
 });
 
+ipcMain.handle("update-grade", async (_,grade) => {
+  return db.updateGrade(grade);
+});
+
 ipcMain.handle("new-exam", async (_,exam) => {
   return db.newExam(exam);
 });
 
 ipcMain.handle("list-subjects", async (_,) => {
   return db.listSubjects();
+});
+
+ipcMain.handle("list-grades", async (_,) => {
+  return db.listGrades();
 });
 
 

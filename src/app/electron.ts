@@ -43,6 +43,14 @@ export class Electron {
     return await (window as any).electronAPI.listSubjects();
   }
 
+  async getGrades() {
+    return await (window as any).electronAPI.listGrades();
+  }
+
+  async updateGrade(grade: any) {
+    return await (window as any).electronAPI.updateGrade(grade);
+  }
+
   async updateHomework(homework: any) {
     return await (window as any).electronAPI.updateHomework(homework);
   }
