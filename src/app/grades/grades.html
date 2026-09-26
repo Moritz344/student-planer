@@ -1,5 +1,8 @@
 <div class="container">
-  <button class="new-grade">Note Eintragen</button>
+  <div class="average-container">
+    <button>{{ settings.averageGrade() }}</button>
+  </div>
+  <button class="new-grade" (click)="onNewGrade()">Note Eintragen</button>
   <div class="grades-container">
     @for (s of settings.subjectData(); track $index) {
       <div class="grade-item">
@@ -11,7 +14,13 @@
         [class.red]="s.color == 'red'"
         src="dot.svg" >
         <span>{{ s.name }}</span>
-        <span class="grade">0</span>
+        <span class="grade">
+        @for (g of settings.gradesData(); track $index) {
+          @if (s.id == g.fk_subject) {
+            <span>{{ g.grade }}</span>
+          }
+        }
+        </span>
       </div>
     }
   </div>
