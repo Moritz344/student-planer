@@ -7,6 +7,18 @@ export interface HomeworkEntry {
   completed: boolean
 }
 
+export interface SubjectEntry {
+  id: number,
+  color: string,
+  name: string
+}
+
+export interface GradeEntry {
+  id: number,
+  fk_subject: number,
+  grade: number
+}
+
 export interface ExamEntry {
   id: number,
   fk_subject: number,
