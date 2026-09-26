@@ -7,28 +7,46 @@ import { Electron } from './electron';
 })
 export class Settings {
   public electron = inject(Electron);
-  public view = signal<"timetable" | "grades" | "home" | "exams">("home");
+  public view = signal<"timetable" | "grades" | "home" | "exams">("grades");
   public showAbout = signal<boolean>(false);
 
   public homeworkData = signal<HomeworkEntry[]>([]);
   public examsData = signal<ExamEntry[]>([]);
+  public gradesData = signal<any[]>([]);
+  public averageGrade = signal<number>(0);
   public subjectData = signal<any[]>([]);
 
   constructor() {
     this.initSubjectsData();
+    this.initGradesData();
   }
 
   async initHomeworkData() {
     this.homeworkData.set(await this.electron.getHomework());
-    for (const h of this.homeworkData()) {
       this.homeworkData.update(list =>
         list.map(item => ({
             ...item,
             subjectData: this.getSubjectDataFromId(item.fk_subject) 
         }))
     )
-    }
     this.sortHomeworkDataByClosestDate();
+  }
+
+  async initGradesData() {
+    this.gradesData.set(await this.electron.getGrades());
+    this.calculateAverageGradeOfAll();
+    console.log("init grades:",this.gradesData());
+  }
+
+  calculateAverageGradeOfAll() {
+    if (this.gradesData().length == 0 ) {
+      return;
+    }
+    let sumOfAllGrades = this.gradesData().reduce((acc,currentValue) => acc + currentValue.grade,0)
+    let gradesQuantity = this.gradesData().length;
+    const averageGradeNotRounded = (sumOfAllGrades / gradesQuantity).toFixed(2);
+    this.averageGrade.set(Number(averageGradeNotRounded))
+    
   }
 
   async initSubjectsData() {
