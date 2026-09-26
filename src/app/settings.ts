@@ -35,7 +35,6 @@ export class Settings {
   async initGradesData() {
     this.gradesData.set(await this.electron.getGrades());
     this.calculateAverageGradeOfAll();
-    console.log("init grades:",this.gradesData());
   }
 
   calculateAverageGradeOfAll() {
