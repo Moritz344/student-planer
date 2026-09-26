@@ -29,13 +29,16 @@
   --danger: #e01b24;
   --danger-hover: #ff7b63;
   --green-button: #26a269;
-  --green-button-hover: #1a5f4a;
+  --green-hover: #33d17a;
   --green-bright: #33d17a;
   --ghost: rgba(255, 255, 255, 0.1);
   --ghost-hover: rgba(255, 255, 255, 0.15);
   --dialog-bg: #2d2d2d;
   --dialog-header-bg: #353535;
   --yellow: #e5a50a;
+  --yellow-hover: #f5c211;
+  --orange: #e66100;
+  --orange-hover: #ff7800;
   --dialog-border: #404040;
   --dialog-radius: 12px;
   --dialog-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
