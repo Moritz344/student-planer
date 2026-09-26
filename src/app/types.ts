@@ -8,9 +8,10 @@ export interface HomeworkEntry {
 }
 
 export interface ExamEntry {
+  id: number,
   fk_subject: number,
   description: string,
   daysLeft?: number,
   subjectData?: any,
-  date: number
+  date: number | null
 }
