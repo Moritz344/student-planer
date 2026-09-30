@@ -46,6 +46,19 @@
   --dialog-close-hover: rgba(255, 255, 255, 0.1);
 }
 
+textarea {
+  background-color: var(--bg-card);
+  border-radius: 6px;
+  padding: 10px;
+  border: none;
+  outline: none;
+  color: var(--text-color);
+  max-width: 500px;
+  min-width: 200px;
+  min-height: 100px;
+  max-height: 200px;
+}
+
 button {
   background-color: var(--ghost);
   color: white;
