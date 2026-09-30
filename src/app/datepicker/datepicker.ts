@@ -1,4 +1,4 @@
-import { Component, computed, effect, model, signal } from '@angular/core';
+import { Component, computed, effect, model, signal,OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -7,11 +7,11 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './datepicker.html',
   styleUrl: './datepicker.css',
 })
-export class Datepicker {
+export class Datepicker implements OnInit {
   public value = model<number | null>(null);
 
   public show = signal(false);
-  public text = signal('');
+  public text = signal<string | null>('');
   public viewMonth = signal<Date>(Datepicker.startOfMonth(new Date()));
 
   public weekdays = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
@@ -30,6 +30,14 @@ export class Datepicker {
       }
       this.text.set(this.value() == null || this.value() === 0 ? '' : this.format(this.value()!));
     });
+  }
+
+  ngOnInit(): void {
+    this.initDateToday();
+  }
+
+  initDateToday() {
+    this.onTextChange(new Date().toLocaleDateString());
   }
 
   public weeks = computed(() => {
