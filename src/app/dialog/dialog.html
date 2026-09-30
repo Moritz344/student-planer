@@ -3,17 +3,20 @@
   @if (dialogService.type() == "new-homework") {
     <div class="new-homework-container">
       <h1 class="header">{{ dialogService.header() }}</h1>
-      <div class="new-homework-entries">
-        <input [(ngModel)]="newHomeworkData().name" spellcheck="false">
+      <div class="new-content">
+        <span style="margin-top: 15px">Beschreibung</span>
+        <textarea [(ngModel)]="newHomeworkData().name" spellcheck="false"></textarea>
+        <span>Fach</span>
         <select [(ngModel)]="newHomeworkData().fk_subject" style="font-size: 20px">
           @for (subject of settings.subjectData(); track $index) {
           <option [value]="subject.id">{{ subject.name }}</option>
           }
         </select>
+        <span>Datum</span>
         <app-datepicker [(value)]="newHomeworkData().due_date"></app-datepicker>
       </div>
       <div class="options-container">
-        <button [disabled]="newHomeworkData().name == ''" (click)="onAddHomework()">Hinzufügen</button>
+        <button [disabled]="newHomeworkData().name == '' || newHomeworkData().due_date == null" (click)="onAddHomework()">Hinzufügen</button>
         <button (click)="dialogService.close()">Abbrechen</button>
       </div>
     </div>
