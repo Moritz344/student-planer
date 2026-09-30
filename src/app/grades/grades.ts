@@ -2,6 +2,9 @@ import { Component,inject,OnInit } from '@angular/core';
 import { Settings } from '../settings';
 import { DialogService } from '../dialog/dialog-service';
 
+// TODO: show average grade circle in color 
+// TODO: show average grade for each subject with a colored circle
+
 @Component({
   selector: 'app-grades',
   imports: [],
