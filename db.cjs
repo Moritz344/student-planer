@@ -29,16 +29,16 @@ db.exec(`CREATE TABLE IF NOT EXISTS homework (
 db.exec(`CREATE TABLE IF NOT EXISTS grades (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     fk_subject INTEGER REFERENCES subjects(id) ON DELETE CASCADE,
-    grade REAL NOT NULL,
-  );
-`);
+    grade REAL NOT NULL
+  )`
+);
 
 db.exec(`CREATE TABLE IF NOT EXISTS exams (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     fk_subject INTEGER REFERENCES subjects(id) ON DELETE CASCADE,
     description TEXT,
-    date TEXT DEFAULT CURRENT_TIMESTAMP
-  );
+    due_date INTEGER
+  )
 `);
 
 db.exec(`CREATE TABLE IF NOT EXISTS timetable (
@@ -48,7 +48,7 @@ db.exec(`CREATE TABLE IF NOT EXISTS timetable (
     start_time TEXT NOT NULL,
     end_time TEXT NOT NULL,
     room TEXT
-  );
+  )
 `);
 
 function resetSubjectTable() {
@@ -59,7 +59,6 @@ function resetSubjectTable() {
 function resetHomeworkTable() {
   db.exec("DROP TABLE homework")
 }
-
 function createTestHomeworkData() {
   db.prepare("INSERT INTO homework (name,fk_subject,due_date) VALUES (?,?,?)").run("Nullstellen berechnen", 1, 1791756000000 )
   db.prepare("INSERT INTO homework (name,fk_subject,due_date) VALUES (?,?,?)").run("Nullstellen berechnen", 1,1790114400000)
