@@ -1,17 +1,16 @@
 <div class="container">
-  <div class="average-container">
-    <button>{{ settings.averageGrade() }}</button>
+  <div
+    class="average-container">
+    <button
+    [class]="'circle-' + settings.getGradeColor(settings.averageGrade())"
+    >{{ settings.averageGrade() }} </button>
   </div>
   <button class="new-grade" (click)="onNewGrade()">Note Eintragen</button>
   <div class="grades-container">
     @for (s of settings.subjectData(); track $index) {
       <div class="grade-item">
         <img class="item-icon"
-        [class.green]="s.color == 'green'"
-        [class.blue]="s.color == 'blue'"
-        [class.yellow]="s.color == 'yellow'"
-        [class.gray]="s.color == 'gray'"
-        [class.red]="s.color == 'red'"
+        [class]="s.color"
         src="dot.svg" >
         <span>{{ s.name }}</span>
         <span class="grade">
