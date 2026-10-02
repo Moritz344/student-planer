@@ -16,6 +16,7 @@ export class Dialog implements OnInit {
   public electron = inject(Electron);
   public settings = inject(Settings);
   public dialogService = inject(DialogService);
+  public maxAmountOfCharacters = signal<number>(50);
 
   public newHomeworkData = signal<HomeworkEntry>({
     id: -1,

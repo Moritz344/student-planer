@@ -16,7 +16,7 @@
         <app-datepicker [(value)]="newHomeworkData().due_date"></app-datepicker>
       </div>
       <div class="options-container">
-        <button [disabled]="newHomeworkData().name == '' || newHomeworkData().due_date == null" (click)="onAddHomework()">Hinzufügen</button>
+        <button [disabled]="newHomeworkData().name == '' || newHomeworkData().due_date == null || newHomeworkData().name.length > maxAmountOfCharacters()" (click)="onAddHomework()">Hinzufügen</button>
         <button (click)="dialogService.close()">Abbrechen</button>
       </div>
     </div>
@@ -36,8 +36,8 @@
     <div>
       <h1 class="header">{{ dialogService.header() }}</h1>
       <div class="new-content">
-        <span>Name</span>
-        <input [(ngModel)]="newExamData().description" spellcheck="false">
+        <span>Beschreibung</span>
+        <textarea [(ngModel)]="newExamData().description" spellcheck="false"></textarea>
         <span>Fach</span>
         <select [(ngModel)]="newExamData().fk_subject" style="font-size: 20px">
         @for (subject of settings.subjectData(); track $index) {
@@ -50,7 +50,7 @@
       </div>
       <div class="options-container">
         <button (click)="onAddExam()"
-        [disabled]="newExamData().description == '' || newExamData().date == null">Hinzufügen
+        [disabled]="newExamData().description == '' || newExamData().date == null || newExamData().description.length > maxAmountOfCharacters()">Hinzufügen
 
         </button>
         <button (click)="dialogService.close()">Abbrechen</button>
@@ -60,17 +60,26 @@
     <div>
       <h1 class="header">{{ dialogService.header() }}</h1>
       <div class="new-content">
-        <span>Note {{newGradeData().grade }}</span>
+        <span>Note</span>
         <div class="grade-container">
           @for (g of grades(); track $index) {
             <div class="grade-item">
-              <button 
-              (click)="onSelectGrade(g)"
-              [class.green]="g < 4 "
-              [class.red]="g == 6"
-              [class.orange]="g == 5"
-              [class.yellow]="g == 4"
-              >{{ g }}</button>
+              @if (newGradeData().grade == 0) {
+                <button 
+                (click)="onSelectGrade(g)"
+                [class]="settings.getGradeColor(g)"
+                >{{ g }}</button>
+              }@else if (newGradeData().grade == g) {
+                <button 
+                (click)="onSelectGrade(g)"
+                [class]="settings.getGradeColor(g)"
+                [class.gray]="g != newGradeData().grade"
+                >{{ g }}</button>
+              }@else if (newGradeData().grade != g) {
+                <button 
+                (click)="onSelectGrade(g)"
+                class="gray">{{ g }}</button>
+              }
             </div>
           }
         </div>
