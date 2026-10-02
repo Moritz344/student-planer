@@ -16,7 +16,7 @@
           src="dot.svg" >
           </div>
           <div class="item-left">
-            <span [class.completed]="e.daysLeft && e.daysLeft < 0">{{e.subjectData.name }} - {{ e.description }}</span>
+            <span class="description" [class.completed]="e.daysLeft && e.daysLeft < 0">{{e.subjectData.name }} - {{ e.description }}</span>
             <span style="color: var(--text-muted)">{{ e.date | date: 'EEEE dd.MM '}}</span>
           </div>
           <span class="item-right"
