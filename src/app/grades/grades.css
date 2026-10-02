@@ -27,10 +27,6 @@
   font-size: 30px;
 }
 
-.average-container button:hover{
-  background-color: var(--ghost);
-}
-
 .grades-container {
   display: flex;
   flex-direction: column;
@@ -73,6 +69,28 @@
   justify-content: flex-end;
   margin-left: auto;
   margin-bottom: 10px;
+}
+
+.circle-orange{
+  background-color: var(--orange);
+}
+
+.circle-orange:hover {
+  background-color: var(--orange-hover);
+}
+
+.circle-green {
+  background-color: var(--green-button)
+}
+.circle-green:hover {
+  background-color: var(--green-hover);
+}
+
+.circle-red {
+  background-color: var(--danger);
+}
+.circle-red:hover {
+  background-color: var(--danger-hover);
 }
 
 .white-img{
