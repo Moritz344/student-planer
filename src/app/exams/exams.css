@@ -11,7 +11,7 @@
 .slim-rect img {
   display: inline-block;
   width: 4px;
-  height: 70px;
+  height: 80px;
   border-radius: 2px;
   background: #fff;
   margin-right: 10px;
@@ -61,7 +61,7 @@
   align-items: center;
   box-sizing: border-box;
   width: auto;
-  min-height: 100px;
+  min-height: auto;
   height: auto;
   background-color: var(--bg-card);
   padding: 10px;
@@ -72,8 +72,13 @@
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  width: 250px;
 }
+
+.description {
+  width: 700px;
+  overflow-wrap: break-word;
+}
+
 
 
 
