@@ -2,8 +2,8 @@ import { Component,inject,OnInit } from '@angular/core';
 import { Settings } from '../settings';
 import { DialogService } from '../dialog/dialog-service';
 
-// TODO: show average grade circle in color 
 // TODO: show average grade for each subject with a colored circle
+// TODO: remove grades
 
 @Component({
   selector: 'app-grades',
@@ -21,6 +21,8 @@ export class Grades implements OnInit{
   ngOnInit(): void {
     console.log("grades:",this.settings.gradesData());
   }
+
+
 
   onNewGrade() {
     this.dialog.open("Neue Note","new-grade");
