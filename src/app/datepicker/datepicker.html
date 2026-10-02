@@ -1,12 +1,27 @@
 <div class="datepicker">
   <input
-    class="datepicker-input"
-    [ngModel]="text()"
-    (ngModelChange)="onTextChange($event)"
+    class="datepicker-input datepicker-date"
+    [ngModel]="dateText()"
+    (ngModelChange)="onDateTextChange($event)"
     placeholder="TT.MM.JJJJ"
     spellcheck="false"
   />
-  <button type="button" class="datepicker-button" (click)="toggle()" aria-label="Kalender öffnen">
+  @if (showTime) {
+    <input
+      class="datepicker-input datepicker-time"
+      type="time"
+      [ngModel]="timeText()"
+      (ngModelChange)="onTimeChange($event)"
+      placeholder="Uhrzeit"
+      aria-label="Uhrzeit"
+    />
+  }
+  <button
+    type="button"
+    class="datepicker-button"
+    (click)="toggleCalendar()"
+    aria-label="Kalender öffnen"
+  >
     <svg
       class="datepicker-icon"
       viewBox="0 0 24 24"
@@ -23,29 +38,31 @@
     </svg>
   </button>
 
-  @if (show()) {
-    <div class="datepicker-overlay" (click)="close()"></div>
+  @if (isCalendarVisible()) {
+    <div class="datepicker-overlay" (click)="closeCalendar()"></div>
     <div class="datepicker-calendar enter-animation">
       <div class="calendar-header">
-        <button type="button" class="calendar-nav" (click)="prevMonth()">&#8249;</button>
-        <span class="calendar-label">{{ months[viewMonth().getMonth()] }} {{ viewMonth().getFullYear() }}</span>
-        <button type="button" class="calendar-nav" (click)="nextMonth()">&#8250;</button>
+        <button type="button" class="calendar-nav" (click)="goToPreviousMonth()">&#8249;</button>
+        <span class="calendar-label">
+          {{ monthNames[viewedMonth().getMonth()] }} {{ viewedMonth().getFullYear() }}
+        </span>
+        <button type="button" class="calendar-nav" (click)="goToNextMonth()">&#8250;</button>
       </div>
       <div class="calendar-weekdays">
-        @for (weekday of weekdays; track $index) {
+        @for (weekday of weekdayLabels; track $index) {
           <span>{{ weekday }}</span>
         }
       </div>
       <div class="calendar-days">
-        @for (week of weeks(); track $index) {
+        @for (week of calendarWeeks(); track $index) {
           @for (day of week; track $index) {
             <button
               type="button"
               class="calendar-day"
-              [class.dimmed]="isDimmed(day.date)"
+              [class.dimmed]="isOutsideViewedMonth(day.date)"
               [class.today]="isToday(day.date)"
-              [class.selected]="isSelected(day.date)"
-              (click)="select(day.date)"
+              [class.selected]="isSelectedDay(day.date)"
+              (click)="selectDay(day.date)"
             >
               {{ day.date.getDate() }}
             </button>

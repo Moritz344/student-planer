@@ -7,10 +7,18 @@
 }
 
 .datepicker-input {
-  flex: 1;
   width: 100%;
   min-width: 0;
   font-size: 20px;
+}
+
+.datepicker-date {
+  flex: 1;
+}
+
+.datepicker-time {
+  flex: 0 0 120px;
+  color-scheme: dark;
 }
 
 .datepicker-button {

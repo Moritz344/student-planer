@@ -1,5 +1,32 @@
-import { Component, computed, effect, model, signal,OnInit } from '@angular/core';
+import { Component, computed, effect, Input, model, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+
+const DAYS_PER_WEEK = 7;
+const WEEKS_PER_CALENDAR_PAGE = 6;
+const MINUTES_PER_HOUR = 60;
+
+const EUROPEAN_DATE_PATTERN =
+  /^(?<day>\d{1,2})[./](?<month>\d{1,2})[./](?<year>\d{4})(?:[ ,]+(?<hours>\d{1,2}):(?<minutes>\d{2}))?$/;
+
+const ISO_DATE_PATTERN =
+  /^(?<year>\d{4})-(?<month>\d{1,2})-(?<day>\d{1,2})(?:[T ]+(?<hours>\d{1,2}):(?<minutes>\d{2}))?$/;
+
+const TIME_PATTERN = /^(?<hours>\d{1,2}):(?<minutes>\d{2})$/;
+
+interface CalendarDay {
+  date: Date;
+  isInViewedMonth: boolean;
+}
+
+type CalendarWeek = CalendarDay[];
+
+interface TypedDateAndTime {
+  day: string;
+  month: string;
+  year: string;
+  hours?: string;
+  minutes?: string;
+}
 
 @Component({
   selector: 'app-datepicker',
@@ -8,140 +35,353 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './datepicker.css',
 })
 export class Datepicker implements OnInit {
-  public value = model<number | null>(null);
+  @Input('time') public showTime: boolean = true;
 
-  public show = signal(false);
-  public text = signal<string | null>('');
-  public viewMonth = signal<Date>(Datepicker.startOfMonth(new Date()));
+  public readonly value = model<number | null>(null);
 
-  public weekdays = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
-  public months = [
+  public readonly isCalendarVisible = signal(false);
+  public readonly viewedMonth = signal<Date>(startOfMonth(new Date()));
+  public readonly dateText = signal('');
+  public readonly timeText = signal('');
+
+  public readonly weekdayLabels = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
+  public readonly monthNames = [
     'Januar', 'Februar', 'März', 'April', 'Mai', 'Juni',
     'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember',
   ];
 
-  private dirty = false;
+  public readonly calendarWeeks = computed(() => buildCalendarWeeks(this.viewedMonth()));
+
+  private isEditedByUser = false;
 
   constructor() {
-    effect(() => {
-      if (this.dirty) {
-        this.dirty = false;
-        return;
-      }
-      this.text.set(this.value() == null || this.value() === 0 ? '' : this.format(this.value()!));
-    });
+    effect(() => this.syncInputsWithValue());
   }
 
   ngOnInit(): void {
-    this.initDateToday();
+    this.selectToday();
   }
 
-  initDateToday() {
-    this.onTextChange(new Date().toLocaleDateString());
-  }
-
-  public weeks = computed(() => {
-    const month = this.viewMonth();
-    const startOffset = (month.getDay() + 6) % 7;
-    const cursor = new Date(month);
-    cursor.setDate(cursor.getDate() - startOffset);
-    const grid: { date: Date; current: boolean }[][] = [];
-    for (let week = 0; week < 6; week++) {
-      const row: { date: Date; current: boolean }[] = [];
-      for (let day = 0; day < 7; day++) {
-        const date = new Date(cursor);
-        row.push({ date, current: date.getMonth() === month.getMonth() });
-        cursor.setDate(cursor.getDate() + 1);
-      }
-      grid.push(row);
+  toggleCalendar(): void {
+    if (this.isCalendarVisible()) {
+      this.closeCalendar();
+      return;
     }
-    return grid;
-  });
 
-  toggle() {
-    if (this.show()) {
-      this.close();
-    } else {
-      this.open();
+    this.openCalendar();
+  }
+
+  openCalendar(): void {
+    this.viewedMonth.set(startOfMonth(this.getSelectedDate() ?? new Date()));
+    this.isCalendarVisible.set(true);
+  }
+
+  closeCalendar(): void {
+    this.isCalendarVisible.set(false);
+    this.refreshInputsAfterClosing();
+  }
+
+  goToPreviousMonth(): void {
+    this.viewedMonth.set(shiftMonth(this.viewedMonth(), -1));
+  }
+
+  goToNextMonth(): void {
+    this.viewedMonth.set(shiftMonth(this.viewedMonth(), 1));
+  }
+
+  selectDay(date: Date): void {
+    const selectedDay = applyTimeOfDay(date, this.getTimeOfDayInMinutes());
+
+    this.value.set(selectedDay.getTime());
+
+    this.closeCalendar();
+  }
+
+  onDateTextChange(typedDate: string): void {
+    this.isEditedByUser = true;
+    this.dateText.set(typedDate);
+    this.value.set(parseDateText(typedDate, this.timeText()));
+  }
+
+  onTimeChange(typedTime: string): void {
+    this.isEditedByUser = true;
+    this.timeText.set(typedTime);
+
+    const selectedDate = this.getSelectedDate();
+
+    if (!selectedDate) {
+      return;
     }
+
+    const minutesSinceMidnight = parseTimeText(typedTime);
+
+    if (minutesSinceMidnight == null) {
+      return;
+    }
+
+    const timestamp = applyTimeOfDay(selectedDate, minutesSinceMidnight).getTime();
+
+    this.value.set(timestamp);
+    this.dateText.set(formatTimestamp(timestamp));
   }
 
-  open() {
-    const selected = this.value();
-    const base = selected != null && selected !== 0 ? new Date(selected) : new Date();
-    this.viewMonth.set(Datepicker.startOfMonth(base));
-    this.show.set(true);
+  isSelectedDay(date: Date): boolean {
+    const selectedDate = this.getSelectedDate();
+
+    if (!selectedDate) {
+      return false;
+    }
+
+    return isSameDay(selectedDate, date);
   }
 
-  close() {
-    this.show.set(false);
-    this.syncText();
+  isToday(date: Date): boolean {
+    return isSameDay(date, new Date());
   }
 
-  prevMonth() {
-    const current = this.viewMonth();
-    this.viewMonth.set(new Date(current.getFullYear(), current.getMonth() - 1, 1));
+  isOutsideViewedMonth(date: Date): boolean {
+    return !isInSameMonth(date, this.viewedMonth());
   }
 
-  nextMonth() {
-    const current = this.viewMonth();
-    this.viewMonth.set(new Date(current.getFullYear(), current.getMonth() + 1, 1));
+  private selectToday(): void {
+    this.onDateTextChange(formatDate(Date.now()));
   }
 
-  select(date: Date) {
-    this.value.set(this.startOfDay(date).getTime());
-    this.close();
+  private syncInputsWithValue(): void {
+    const timestamp = this.value();
+
+    if (this.isEditedByUser) {
+      this.isEditedByUser = false;
+      return;
+    }
+
+    this.applyValueToInputs(timestamp);
   }
 
-  onTextChange(text: string) {
-    this.dirty = true;
-    this.text.set(text);
-    this.value.set(this.parse(text));
+  private refreshInputsAfterClosing(): void {
+    const timestamp = this.value();
+
+    if (!isFilledTimestamp(timestamp)) {
+      return;
+    }
+
+    this.isEditedByUser = true;
+
+    this.applyValueToInputs(timestamp);
   }
 
-  syncText() {
-    this.dirty = true;
-    const value = this.value();
-    this.text.set(value == null || value === 0 ? this.text() : this.format(value));
+  private applyValueToInputs(timestamp: number | null): void {
+    if (!isFilledTimestamp(timestamp)) {
+      this.dateText.set('');
+      this.timeText.set('');
+      return;
+    }
+
+    const formattedTime = hasTimeOfDay(timestamp) ? formatTimeOfDay(timestamp) : '';
+
+    this.dateText.set(formatTimestamp(timestamp));
+    this.timeText.set(formattedTime);
   }
 
-  isSelected(date: Date) {
-    return this.value() === this.startOfDay(date).getTime();
+  private getSelectedDate(): Date | null {
+    const timestamp = this.value();
+
+    if (!isFilledTimestamp(timestamp)) {
+      return null;
+    }
+
+    return new Date(timestamp);
   }
 
-  isToday(date: Date) {
-    return this.startOfDay(date).getTime() === this.startOfDay(new Date()).getTime();
+  private getTimeOfDayInMinutes(): number {
+    return parseTimeText(this.timeText()) ?? 0;
+  }
+}
+
+function buildCalendarWeeks(viewedMonth: Date): CalendarWeek[] {
+  const firstDayOfGrid = startOfFirstWeekOf(viewedMonth);
+  const weeks: CalendarWeek[] = [];
+
+  for (let weekIndex = 0; weekIndex < WEEKS_PER_CALENDAR_PAGE; weekIndex++) {
+    const firstDayOfWeek = addDays(firstDayOfGrid, weekIndex * DAYS_PER_WEEK);
+
+    weeks.push(buildCalendarWeek(firstDayOfWeek, viewedMonth));
   }
 
-  isDimmed(date: Date) {
-    return date.getMonth() !== this.viewMonth().getMonth();
+  return weeks;
+}
+
+function buildCalendarWeek(firstDayOfWeek: Date, viewedMonth: Date): CalendarWeek {
+  const days: CalendarDay[] = [];
+
+  for (let dayIndex = 0; dayIndex < DAYS_PER_WEEK; dayIndex++) {
+    const date = addDays(firstDayOfWeek, dayIndex);
+
+    days.push({ date, isInViewedMonth: isInSameMonth(date, viewedMonth) });
   }
 
-  private parse(text: string): number | null {
-    const trimmed = text.trim();
-    const european = trimmed.match(/^(\d{1,2})[./](\d{1,2})[./](\d{4})$/);
-    const iso = trimmed.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
-    if (!european && !iso) return null;
-    const parts: [number, number, number] = european
-      ? [+european[1], +european[2], +european[3]]
-      : [+iso![2], +iso![3], +iso![1]];
-    const [day, month, year] = parts;
-    const date = new Date(year, month - 1, day);
-    if (date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day) return null;
-    return date.getTime();
+  return days;
+}
+
+function startOfFirstWeekOf(month: Date): Date {
+  const daysSinceMonday = (month.getDay() + 6) % DAYS_PER_WEEK;
+
+  return addDays(startOfDay(month), -daysSinceMonday);
+}
+
+function addDays(date: Date, days: number): Date {
+  const result = new Date(date);
+
+  result.setDate(result.getDate() + days);
+
+  return result;
+}
+
+function shiftMonth(month: Date, monthOffset: number): Date {
+  return new Date(month.getFullYear(), month.getMonth() + monthOffset, 1);
+}
+
+function startOfDay(date: Date): Date {
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+}
+
+function startOfMonth(date: Date): Date {
+  return new Date(date.getFullYear(), date.getMonth(), 1);
+}
+
+function isSameDay(firstDate: Date, secondDate: Date): boolean {
+  return startOfDay(firstDate).getTime() === startOfDay(secondDate).getTime();
+}
+
+function isInSameMonth(firstDate: Date, secondDate: Date): boolean {
+  return (
+    firstDate.getFullYear() === secondDate.getFullYear() && firstDate.getMonth() === secondDate.getMonth()
+  );
+}
+
+function isFilledTimestamp(timestamp: number | null): timestamp is number {
+  return timestamp != null && timestamp !== 0;
+}
+
+function parseDateText(typedDate: string, fallbackTimeOfDay: string): number | null {
+  const typedDateAndTime = matchDateText(typedDate);
+
+  if (!typedDateAndTime) {
+    return null;
   }
 
-  private format(timestamp: number): string {
-    const date = new Date(timestamp);
-    const pad = (n: number) => String(n).padStart(2, '0');
-    return `${pad(date.getDate())}.${pad(date.getMonth() + 1)}.${date.getFullYear()}`;
+  const typedDateOnly = createDate(
+    Number(typedDateAndTime.day),
+    Number(typedDateAndTime.month),
+    Number(typedDateAndTime.year),
+  );
+
+  if (!typedDateOnly) {
+    return null;
   }
 
-  private startOfDay(date: Date): Date {
-    return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  const typedTimeOfDay = typedDateAndTime.hours
+    ? `${typedDateAndTime.hours}:${typedDateAndTime.minutes}`
+    : fallbackTimeOfDay;
+
+  const minutesSinceMidnight = parseTimeText(typedTimeOfDay);
+
+  if (minutesSinceMidnight == null) {
+    return null;
   }
 
-  private static startOfMonth(date: Date): Date {
-    return new Date(date.getFullYear(), date.getMonth(), 1);
+  return applyTimeOfDay(typedDateOnly, minutesSinceMidnight).getTime();
+}
+
+function matchDateText(typedDate: string): TypedDateAndTime | null {
+  const trimmedText = typedDate.trim();
+  const match = trimmedText.match(EUROPEAN_DATE_PATTERN) ?? trimmedText.match(ISO_DATE_PATTERN);
+  const groups = match?.groups;
+
+  if (!groups) {
+    return null;
   }
+
+  return {
+    day: groups['day'],
+    month: groups['month'],
+    year: groups['year'],
+    hours: groups['hours'],
+    minutes: groups['minutes'],
+  };
+}
+
+function createDate(day: number, month: number, year: number): Date | null {
+  const date = new Date(year, month - 1, day);
+
+  if (date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day) {
+    return null;
+  }
+
+  return date;
+}
+
+function parseTimeText(typedTime: string): number | null {
+  const trimmedText = typedTime.trim();
+
+  if (trimmedText === '') {
+    return 0;
+  }
+
+  const match = trimmedText.match(TIME_PATTERN);
+
+  if (!match?.groups) {
+    return null;
+  }
+
+  return toMinutesSinceMidnight(Number(match.groups['hours']), Number(match.groups['minutes']));
+}
+
+function toMinutesSinceMidnight(hours: number, minutes: number): number | null {
+  if (hours > 23 || minutes > 59) {
+    return null;
+  }
+
+  return hours * MINUTES_PER_HOUR + minutes;
+}
+
+function applyTimeOfDay(date: Date, minutesSinceMidnight: number): Date {
+  const hours = Math.floor(minutesSinceMidnight / MINUTES_PER_HOUR);
+  const minutes = minutesSinceMidnight % MINUTES_PER_HOUR;
+
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate(), hours, minutes);
+}
+
+function formatTimestamp(timestamp: number): string {
+  const formattedDate = formatDate(timestamp);
+
+  if (!hasTimeOfDay(timestamp)) {
+    return formattedDate;
+  }
+
+  return `${formattedDate} ${formatTimeOfDay(timestamp)}`;
+}
+
+function formatDate(timestamp: number): string {
+  const date = new Date(timestamp);
+  const day = padToTwoDigits(date.getDate());
+  const month = padToTwoDigits(date.getMonth() + 1);
+
+  return `${day}.${month}.${date.getFullYear()}`;
+}
+
+function formatTimeOfDay(timestamp: number): string {
+  const date = new Date(timestamp);
+
+  return `${padToTwoDigits(date.getHours())}:${padToTwoDigits(date.getMinutes())}`;
+}
+
+function hasTimeOfDay(timestamp: number): boolean {
+  const date = new Date(timestamp);
+
+  return date.getHours() !== 0 || date.getMinutes() !== 0;
+}
+
+function padToTwoDigits(value: number): string {
+  return String(value).padStart(2, '0');
 }
