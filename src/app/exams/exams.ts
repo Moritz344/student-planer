@@ -2,12 +2,10 @@ import { Component,inject,signal } from '@angular/core';
 import { Electron } from '../electron';
 import { Settings } from '../settings';
 import { DatePipe } from '@angular/common';
-import { ExamEntry } from '../types';
 import { DialogService } from '../dialog/dialog-service';
 
 // TODO: delete exam
 // TODO: Raum? Uhrzeit?
-// TODO: Fach anzeigen durch farbe und name
 
 @Component({
   selector: 'app-exams',
