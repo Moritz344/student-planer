@@ -56,6 +56,16 @@ export class Settings {
     return this.subjectData().find(s => s.id == id);
   }
 
+  getGradeColor(grade: number) {
+    if (grade < 3) {
+      return "green";
+    } else if (grade <= 4) {
+      return "orange"
+    } else {
+      return "red"
+    }
+  }
+
   async initExamsData() {
     this.examsData.set(await this.electron.getExam());
     this.examsData.update(exam => 
