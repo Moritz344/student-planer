@@ -61,6 +61,12 @@
   margin-right: 5px;
 }
 
+.container-options {
+  display: flex;
+  justify-content: space-between;
+
+}
+
 .grade button {
   padding: 10px;
   width: 30px;
@@ -72,12 +78,21 @@
 
 .new-grade {
   padding: 10px;
-  display: flex;
-  flex-direction: row;
-  flex: 0 0 auto;
-  justify-content: flex-end;
-  margin-left: auto;
   margin-bottom: 10px;
+  background-color: var(--accent-color)
+}
+
+.new-grade:hover {
+  background-color: var(--accent-hover);
+}
+
+.reset-grade {
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: var(--danger);
+}
+.reset-grade:hover{
+  background-color: var(--danger-hover);
 }
 
 .circle-orange{

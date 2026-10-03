@@ -5,7 +5,10 @@
     [class]="'circle-' + settings.getGradeColor(settings.averageGrade())"
     >{{ settings.averageGrade() }} </button>
   </div>
-  <button class="new-grade" (click)="onNewGrade()">Note Eintragen</button>
+  <div class="container-options">
+    <button class="reset-grade">Alle Noten zurücksetzen</button>
+    <button class="new-grade" (click)="onNewGrade()">Neue Note Eintragen</button>
+  </div>
   <div class="grades-container">
     @for (s of settings.subjectData(); track $index) {
       <div class="grade-item">
