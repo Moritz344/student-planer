@@ -4,7 +4,7 @@ import { Settings } from '../settings';
 import { FormsModule } from '@angular/forms';
 import { DialogService } from './dialog-service';
 import { Datepicker } from '../datepicker/datepicker';
-import { HomeworkEntry,ExamEntry } from '../types';
+import { HomeworkEntry,ExamEntry,GradeEntry } from '../types';
 
 @Component({
   selector: 'app-dialog',
@@ -35,11 +35,12 @@ export class Dialog implements OnInit {
 
   public grades = signal<number[]>([1,2,3,4,5,6])
 
-  public newGradeData = signal<any>({
+  public newGradeData = signal<GradeEntry>({
     id: -1,
     fk_subject: 0,
     grade: 0
   })
+
 
   constructor() {
   }
@@ -54,8 +55,25 @@ export class Dialog implements OnInit {
     }
   }
 
+  onDeleteGrade() {
+    this.electron.deleteGrade(this.dialogService.gradeDataToEdit().id);
+    this.settings.initGradesData();
+    this.dialogService.close();
+  }
+
+  onUpdateGrade() {
+    this.electron.updateGrade(this.dialogService.gradeDataToEdit());
+    this.settings.initGradesData();
+    this.dialogService.close();
+    
+  }
+
+  onUpdateGradeNumber(grade: number) {
+    this.dialogService.gradeDataToEdit.update((data: any) => ({...data,grade}));
+  }
+
   onSelectGrade(grade: number) {
-    this.newGradeData().grade = grade;
+    this.newGradeData.update(data => ({ ...data, grade }));
   }
 
   async onAddHomework() {
