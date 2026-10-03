@@ -20,6 +20,10 @@ export class Electron {
     return (window as any).electronAPI.deleteHomework(id);
   }
 
+  deleteGrade(id: number) {
+    return (window as any).electronAPI.deleteGrade(id);
+  }
+
   getExam(): Promise<ExamEntry[]> {
     return (window as any).electronAPI.listExam();
   }
