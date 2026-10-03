@@ -6,6 +6,12 @@
   width: auto;
 }
 
+.homework-top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .white-img{
   filter: brightness(0) invert(1);
 }
