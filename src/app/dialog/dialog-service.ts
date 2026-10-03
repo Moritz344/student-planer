@@ -1,5 +1,5 @@
 import { Injectable,signal,inject } from '@angular/core';
-import { HomeworkEntry } from '../types';
+import { HomeworkEntry,GradeEntry } from '../types';
 
 @Injectable({
   providedIn: 'root',
@@ -8,6 +8,13 @@ export class DialogService {
   public show = signal<boolean>(false);
   public type = signal<string>("");
   public header = signal<string>("");
+
+  public gradeDataToEdit = signal<GradeEntry>({
+    fk_subject: -1,
+    grade: 0,
+    id: 0
+  });
+
   public homeworkDeleteData = signal<HomeworkEntry>({
     id: 0,
     fk_subject: 0,
@@ -22,10 +29,25 @@ export class DialogService {
     this.show.set(true);
   }
 
-
-  close() {
+  reset() {
     this.type.set("");
     this.header.set("");
+    this.homeworkDeleteData.set({
+      id: 0,
+      fk_subject: 0,
+      name: "",
+      due_date: 0,
+      completed: false
+    });
+    this.gradeDataToEdit.set({
+      fk_subject: -1,
+      grade: 0,
+      id: 0
+    });
+  }
+
+  close() {
+    this.reset();
     this.show.set(false);
   }
 
