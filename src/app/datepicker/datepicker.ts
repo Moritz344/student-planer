@@ -1,6 +1,8 @@
 import { Component, computed, effect, Input, model, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
+// TODO: choose position based on enough space
+
 const DAYS_PER_WEEK = 7;
 const WEEKS_PER_CALENDAR_PAGE = 6;
 const MINUTES_PER_HOUR = 60;
