@@ -42,8 +42,11 @@
   justify-content: right;
 }
 .container-options button{
-  padding: 10px;
   margin-bottom: 10px;
+  background-color: var(--accent-color);
+}
+.container-options button:hover{
+  background-color: var(--accent-hover);
 }
 
 .exams-container {

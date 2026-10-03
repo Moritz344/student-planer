@@ -94,11 +94,13 @@ hr{
 
 
 .new-homework {
-  padding: 10px;
+  background-color: var(--accent-color);
+}
+.new-homework:hover{
+  background-color: var(--accent-hover);
 }
 
 .delete-homework {
-  padding: 10px;
   width: auto;
 }
 
