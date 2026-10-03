@@ -1,8 +1,8 @@
 <div class="screen"></div>
 <div class="container">
+  <h1 class="header">{{ dialogService.header() }}</h1>
   @if (dialogService.type() == "new-homework") {
     <div class="new-homework-container">
-      <h1 class="header">{{ dialogService.header() }}</h1>
       <div class="new-content">
         <span style="margin-top: 15px">Beschreibung</span>
         <textarea [(ngModel)]="newHomeworkData().name" spellcheck="false"></textarea>
@@ -22,7 +22,6 @@
     </div>
   }@else if (dialogService.type() == "delete-homework") {
     <div>
-      <h1 class="header">{{ dialogService.header() }}</h1>
       <div class="content">
         <span>Bist du sicher das du die  Hausaufgabe mit dem Titel <br> "{{ dialogService.homeworkDeleteData().name }}" löschen willst?</span>
       </div>
@@ -34,7 +33,6 @@
  
   }@else if (dialogService.type() == "new-exam") {
     <div>
-      <h1 class="header">{{ dialogService.header() }}</h1>
       <div class="new-content">
         <span>Beschreibung</span>
         <textarea [(ngModel)]="newExamData().description" spellcheck="false"></textarea>
@@ -58,7 +56,6 @@
     </div>
   }@else if (dialogService.type() == "new-grade") {
     <div>
-      <h1 class="header">{{ dialogService.header() }}</h1>
       <div class="new-content">
         <span>Note</span>
         <div class="grade-container">
@@ -84,7 +81,7 @@
           }
         </div>
         <span>Fach</span>
-        <select [(ngModel)]="newGradeData().fk_subject" style="font-size: 20px">
+        <select [(ngModel)]="newGradeData().fk_subject" >
         @for (subject of settings.subjectData(); track $index) {
           <option [value]="subject.id">{{ subject.name }}</option>
         }
@@ -99,5 +96,42 @@
       </div>
     </div>
     
+  }@else if (dialogService.type() == "edit-grade") {
+    <div>
+      <div class="new-content">
+        <span>Note ändern</span>
+        <div class="grade-container">
+          @for (g of grades(); track $index) {
+            <div class="grade-item">
+              @if (dialogService.gradeDataToEdit().grade == 0) {
+                <button 
+                [class]="settings.getGradeColor(g)"
+                >{{ g }}</button>
+              }@else if (dialogService.gradeDataToEdit().grade == g) {
+                <button 
+                [class]="settings.getGradeColor(g)"
+                [class.gray]="g != newGradeData().grade"
+                >{{ g }}</button>
+              }@else if (dialogService.gradeDataToEdit().grade != g) {
+                <button 
+                (click)="onUpdateGradeNumber(g) "
+                class="gray">{{ g }}</button>
+              }
+            </div>
+          }
+        </div>
+        <span>Fach</span>
+        <select [(ngModel)]="dialogService.gradeDataToEdit().fk_subject">
+          @for (s of settings.subjectData(); track $index) {
+            <option [value]="s.id">{{ s.name }}</option>
+          }
+        </select>
+      </div>
+      <div class="options-container">
+        <button (click)="onUpdateGrade()">Speichern</button>
+        <button (click)="onDeleteGrade()" class="delete-homework-button">Löschen</button>
+        <button (click)="dialogService.close()">Abbrechen </button>
+      </div>
+    </div>
   }
 </div>
