@@ -10,6 +10,19 @@ const defaultSubjects = [
   { name: "Ethik",id: 5,color: "gray"},
   { name: "Englisch",id: 6,color: "yellow"},
   { name: "Physik",id: 7,color: "green"},
+  { name: "Geschichte",id: 8,color: "green"},
+  { name: "Erdkunde",id: 9,color: "green"},
+  { name: "Biologie",id: 10,color: "green"},
+  { name: "Chemie",id: 11,color: "yellow"},
+  { name: "Sport",id: 12,color: "gray"},
+  { name: "Religion",id: 13,color: "gray"},
+  { name: "Kunst",id: 14,color: "yellow"},
+  { name: "Musik",id: 15,color: "yellow"},
+  { name: "Französisch",id: 16,color: "yellow"},
+  { name: "Latein",id: 17,color: "red"},
+  { name: "Rechtslehre",id: 18,color: "red"},
+  { name: "Betriebswirtschaftslehre",id: 19,color: "red"},
+  { name: "Rechnungswesen",id: 20,color: "yellow"},
 ]
 
 db.exec(`CREATE TABLE IF NOT EXISTS subjects (
@@ -102,13 +115,18 @@ function deleteHomework(id) {
   db.prepare("DELETE FROM homework WHERE id = ?").run(id)
 }
 
+function deleteGrade(id) {
+  db.prepare("DELETE FROM grades WHERE id = ?").run(id);
+}
+
 function updateGrade(grade) {
   if (grade.id != -1) {
-    db.prepare("UPDATE grades SET grade = ? WHERE id = ?").run(grade.grade,grade.id);
+    db.prepare("UPDATE grades SET grade = ?,fk_subject = ? WHERE id = ?").run(grade.grade,grade.fk_subject,grade.id);
   } else {
     db.prepare("INSERT INTO grades (fk_subject,grade) VALUES(?,?)").run(grade.fk_subject,grade.grade)
   }
 }
+
 
 function listGrades() {
   return db.prepare("SELECT * FROM grades").all()
@@ -140,5 +158,6 @@ module.exports = {
   updateHomework,
   updateGrade,
   deleteHomework,
+  deleteGrade,
   newExam
 }
