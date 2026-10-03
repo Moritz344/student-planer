@@ -1,6 +1,7 @@
 import { Component,inject,OnInit } from '@angular/core';
 import { Settings } from '../settings';
 import { DialogService } from '../dialog/dialog-service';
+import { GradeEntry } from '../types';
 
 // TODO: show average grade for each subject with a colored circle
 // TODO: remove grades
@@ -22,10 +23,14 @@ export class Grades implements OnInit{
     console.log("grades:",this.settings.gradesData());
   }
 
+  onEditGrade(gradeData: GradeEntry) {
+    this.dialog.open("Note Bearbeiten","edit-grade");
+    this.dialog.gradeDataToEdit.set(gradeData);
+  }
 
 
   onNewGrade() {
-    this.dialog.open("Neue Note","new-grade");
+    this.dialog.open("Note Eintragen","new-grade");
   }
 
 

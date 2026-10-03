@@ -16,7 +16,7 @@
         <span class="grade">
         @for (g of settings.gradesData(); track $index) {
           @if (s.id == g.fk_subject) {
-            <span>{{ g.grade }}</span>
+            <button (click)="onEditGrade(g)" [class]="'circle-' + settings.getGradeColor(g.grade)">{{ g.grade }}</button>
           }
         }
         </span>
