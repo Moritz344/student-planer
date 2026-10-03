@@ -1,4 +1,4 @@
-import { Component,inject, Input, Output, signal,OnInit,EventEmitter } from '@angular/core';
+import { Component,inject, signal,OnInit, HostListener } from '@angular/core';
 import { Electron } from '../electron';
 import { Settings } from '../settings';
 import { FormsModule } from '@angular/forms';
@@ -45,6 +45,13 @@ export class Dialog implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  @HostListener("window:keydown",['$event'])
+  closeOnEscape(event: any) {
+    if (event.code == "Escape") {
+      this.dialogService.close();
+    }
   }
 
   onSelectGrade(grade: number) {
