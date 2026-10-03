@@ -4,7 +4,7 @@ import { DialogService } from '../dialog/dialog-service';
 import { GradeEntry } from '../types';
 
 // TODO: show average grade for each subject with a colored circle
-// TODO: remove grades
+// TODO: weight option
 
 @Component({
   selector: 'app-grades',
@@ -20,7 +20,6 @@ export class Grades implements OnInit{
   }
 
   ngOnInit(): void {
-    console.log("grades:",this.settings.gradesData());
   }
 
   onEditGrade(gradeData: GradeEntry) {
