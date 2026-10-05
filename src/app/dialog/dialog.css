@@ -33,13 +33,7 @@ input,select {
   font-size: 20px;
 }
 
-.options-container button:disabled {
-   pointer-events: none;
-  opacity: 0.6;
-  cursor: not-allowed;
 
-
-}
 
 
 
