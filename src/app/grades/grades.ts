@@ -22,6 +22,10 @@ export class Grades implements OnInit{
   ngOnInit(): void {
   }
 
+  onRemoveGrades() {
+    this.dialog.open("Noten Löschen","reset-grades");
+  }
+
   onEditGrade(gradeData: GradeEntry) {
     this.dialog.open("Note Bearbeiten","edit-grade");
     this.dialog.gradeDataToEdit.set(gradeData);
