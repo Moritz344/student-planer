@@ -147,6 +147,7 @@ export class Datepicker implements OnInit {
 
   private selectToday(): void {
     this.onDateTextChange(formatDate(Date.now()));
+    this.onTimeChange(formatTimeOfDay(Date.now()))
   }
 
   private syncInputsWithValue(): void {
