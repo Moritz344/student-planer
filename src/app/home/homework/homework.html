@@ -8,23 +8,15 @@
       @for (h of homeworkData(); track $index) {
         <div class="homework-item">
           <input type="checkbox" [(ngModel)]="h.completed" (change)="updateCompletedStatus(h)" [checked]="false">
-        <img class="item-icon"
-        [class.green]="h.subjectData.color == 'green'"
-        [class.blue]="h.subjectData.color == 'blue'"
-        [class.yellow]="h.subjectData.color == 'yellow'"
-        [class.gray]="h.subjectData.color == 'gray'"
-        [class.red]="h.subjectData.color == 'red'"
-        src="dot.svg" >
+          <img class="item-icon" [class]="h.subjectData.color" src="dot.svg">
           <div class="homework-item-row-1">
             <span class="homework-name" [class.completed]="h.completed" >{{ h.name }}</span>
             <div class="right-items">
-              <span>
-                @if (h.due_date == this.today.getTime()) {
-                  heute um {{ h.due_date | date: 'HH:mm'}} Uhr
-                }@else {
-                  {{ h.due_date | date:'dd.MM.yyyy'}}
-                }
-              </span>
+              @if (h.isToday) {
+                <span>heute um {{ h.due_date | date:'HH:MM' }} Uhr</span>
+              }@else {
+                <span>{{ h.due_date | date:'dd.MM.yyyy HH:MM' }}</span>
+              }
               <button class="delete-homework" title="Hausaufgabe archivieren" (click)="onDeleteHomework(h)"><img src="delete.svg"></button>
             </div>
           </div>
