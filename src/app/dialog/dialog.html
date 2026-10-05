@@ -133,5 +133,15 @@
         <button (click)="dialogService.close()">Abbrechen </button>
       </div>
     </div>
+  }@else if (dialogService.type() == "reset-grades") {
+    <div>
+      <div class="content">
+        <span>Bist du sicher das du <strong>alle Noten</strong> zurücksetzen willst?</span>
+      </div>
+      <div class="options-container">
+        <button (click)="onResetGrades()" class="delete-homework-button">Löschen</button>
+        <button (click)="dialogService.close()">Abbrechen </button>
+      </div>
+    </div>
   }
 </div>
