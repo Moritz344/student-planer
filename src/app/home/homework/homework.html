@@ -13,9 +13,9 @@
             <span class="homework-name" [class.completed]="h.completed" >{{ h.name }}</span>
             <div class="right-items">
               @if (h.isToday) {
-                <span>heute um {{ h.due_date | date:'HH:MM' }} Uhr</span>
+                <span>heute um {{ h.due_date | date:'HH:mm' }} Uhr</span>
               }@else {
-                <span>{{ h.due_date | date:'dd.MM.yyyy HH:MM' }}</span>
+                <span>{{ h.due_date | date:'dd.MM.yyyy HH:mm' }}</span>
               }
               <button class="delete-homework" title="Hausaufgabe archivieren" (click)="onDeleteHomework(h)"><img src="delete.svg"></button>
             </div>

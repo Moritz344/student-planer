@@ -17,7 +17,7 @@
           </div>
           <div class="item-left">
             <span class="description" [class.completed]="e.daysLeft && e.daysLeft < 0">{{e.subjectData.name }} - {{ e.description }}</span>
-            <span style="color: var(--text-muted)">{{ e.date | date: 'EEEE dd.MM '}}</span>
+            <span style="color: var(--text-muted)">{{ e.date | date: 'EEEE dd.MM.yyyy HH:mm '}}</span>
           </div>
           <span class="item-right"
           [class.finished]="e.daysLeft != undefined && e.daysLeft < 0"
