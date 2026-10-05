@@ -4,6 +4,7 @@ export interface HomeworkEntry {
   fk_subject: number,
   due_date: number,
   subjectData?: any,
+  isToday?: boolean,
   completed: boolean
 }
 

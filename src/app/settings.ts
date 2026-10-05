@@ -26,10 +26,20 @@ export class Settings {
       this.homeworkData.update(list =>
         list.map(item => ({
             ...item,
-            subjectData: this.getSubjectDataFromId(item.fk_subject) 
+            subjectData: this.getSubjectDataFromId(item.fk_subject),
+            isToday: this.checkIfDueDateIsToday(item.due_date)
         }))
     )
     this.sortHomeworkDataByClosestDate();
+  }
+
+  checkIfDueDateIsToday(due_date: number) {
+     const date = new Date(due_date)
+     date.setHours(0,0,0,0);
+     const dueStart = date.getTime();
+     const todayStart = new Date();
+     todayStart.setHours(0, 0, 0, 0);
+     return dueStart === todayStart.getTime();
   }
 
   async initGradesData() {
