@@ -55,6 +55,12 @@ export class Dialog implements OnInit {
     }
   }
 
+  onResetGrades() {
+    this.electron.resetGrades();
+    this.settings.initGradesData();
+    this.dialogService.close();
+  }
+
   onDeleteGrade() {
     this.electron.deleteGrade(this.dialogService.gradeDataToEdit().id);
     this.settings.initGradesData();
