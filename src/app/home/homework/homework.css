@@ -73,12 +73,21 @@
   gap: 10px;
   color: var(--text-muted);
 }
+
 .subject-name {
   margin-left: 60px;
   float: left;
   color: var(--text-muted);
-  margin-top: -30px;
+  margin-top: -25px;
 }
+
+.homework-name {
+  margin-left: 7px;
+  margin-bottom: 0px;
+  font-size: 18px;
+}
+
+
 
 
 hr{
@@ -119,11 +128,6 @@ hr{
   height: 20px;
 }
 
-
-.homework-name {
-  margin-left: 7px;
-  margin-bottom: 0px
-}
 
 
 .completed {
