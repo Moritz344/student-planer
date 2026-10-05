@@ -6,7 +6,7 @@
     >{{ settings.averageGrade() }} </button>
   </div>
   <div class="container-options">
-    <button class="reset-grade">Alle Noten zurücksetzen</button>
+    <button class="reset-grade" (click)="onRemoveGrades()" [disabled]="settings.gradesData().length == 0">Alle Noten zurücksetzen</button>
     <button class="new-grade" (click)="onNewGrade()">Neue Note Eintragen</button>
   </div>
   <div class="grades-container">
@@ -15,7 +15,7 @@
         <img class="item-icon"
         [class]="s.color"
         src="dot.svg" >
-        <span>{{ s.name }}</span>
+        <span style="font-size: 18px">{{ s.name }}</span>
         <span class="grade">
         @for (g of settings.gradesData(); track $index) {
           @if (s.id == g.fk_subject) {
