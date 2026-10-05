@@ -9,6 +9,7 @@ contextBridge.exposeInMainWorld("electronAPI", {
   listExam: () => ipcRenderer.invoke("list-exam"),
   listGrades: () => ipcRenderer.invoke("list-grades"),
   deleteHomework: (id) => ipcRenderer.invoke("delete-homework",id),
+  resetGrades: () => ipcRenderer.invoke("reset-grades"),
   deleteGrade: (id) => ipcRenderer.invoke("delete-grade",id),
   updateHomework: (homework) => ipcRenderer.invoke("update-homework",homework),
   updateGrade: (grade) => ipcRenderer.invoke("update-grade",grade),

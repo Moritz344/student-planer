@@ -56,6 +56,10 @@ ipcMain.handle("delete-homework",(_,id) => {
   db.deleteHomework(id)
 });
 
+ipcMain.handle("reset-grades",(_) => {
+  db.resetGrades()
+});
+
 ipcMain.handle("delete-grade",(_,id) => {
   db.deleteGrade(id)
 });

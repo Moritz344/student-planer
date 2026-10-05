@@ -119,6 +119,10 @@ function deleteGrade(id) {
   db.prepare("DELETE FROM grades WHERE id = ?").run(id);
 }
 
+function resetGrades() {
+  db.prepare("DELETE FROM grades").run();
+}
+
 function updateGrade(grade) {
   if (grade.id != -1) {
     db.prepare("UPDATE grades SET grade = ?,fk_subject = ? WHERE id = ?").run(grade.grade,grade.fk_subject,grade.id);
@@ -159,5 +163,6 @@ module.exports = {
   updateGrade,
   deleteHomework,
   deleteGrade,
-  newExam
+  newExam,
+  resetGrades
 }

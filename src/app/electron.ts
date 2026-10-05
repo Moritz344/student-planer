@@ -24,6 +24,10 @@ export class Electron {
     return (window as any).electronAPI.deleteGrade(id);
   }
 
+  resetGrades() {
+    return (window as any).electronAPI.resetGrades();
+  }
+
   getExam(): Promise<ExamEntry[]> {
     return (window as any).electronAPI.listExam();
   }
