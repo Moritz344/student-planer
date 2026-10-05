@@ -1,5 +1,6 @@
 .container {
   position: absolute;
+  user-select: none;
   top: 60px;
   left: 210px;
   right: 10px;
