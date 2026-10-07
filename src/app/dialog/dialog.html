@@ -143,5 +143,22 @@
         <button (click)="dialogService.close()">Abbrechen </button>
       </div>
     </div>
+  }@else if (dialogService.type() == "create-timetable") {
+      <div class="new-content">
+        <span>Stundenzeit</span>
+        <input spellcheck="false" [(ngModel)]="newTimetableConfig().hour_length" placeholder="45min">
+        <span>Stundenanfang</span>
+        <input spellcheck="false" [(ngModel)]="newTimetableConfig().start_time" placeholder="8:15">
+        <span>Stundenende</span>
+        <input spellcheck="false" [(ngModel)]="newTimetableConfig().end_time" placeholder="13:15">
+        <span>Pausen nach ... Stunden</span>
+        <input spellcheck="false" [(ngModel)]="newTimetableConfig().break_step" placeholder="2">
+        <span>Pausen Dauer</span>
+        <input spellcheck="false" [(ngModel)]="newTimetableConfig().break_time" placeholder="15min">
+      </div>
+      <div class="options-container">
+        <button (click)="onSaveTimetableConfig()" [disabled]="checkFieldsForSavingTimetableConfig()">Speichern</button>
+        <button (click)="dialogService.close()">Abbrechen </button>
+      </div>
   }
 </div>

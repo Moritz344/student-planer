@@ -4,7 +4,7 @@ import { Settings } from '../settings';
 import { FormsModule } from '@angular/forms';
 import { DialogService } from './dialog-service';
 import { Datepicker } from '../datepicker/datepicker';
-import { HomeworkEntry,ExamEntry,GradeEntry } from '../types';
+import { HomeworkEntry,ExamEntry,GradeEntry, TimetableConfig } from '../types';
 
 @Component({
   selector: 'app-dialog',
@@ -41,6 +41,15 @@ export class Dialog implements OnInit {
     grade: 0
   })
 
+  public newTimetableConfig = signal<TimetableConfig>({
+    id: 0,
+    hour_length: null,
+    start_time: null,
+    end_time: null,
+    break_time: null,
+    break_step: null
+  })
+
 
   constructor() {
   }
@@ -65,6 +74,31 @@ export class Dialog implements OnInit {
     this.electron.deleteGrade(this.dialogService.gradeDataToEdit().id);
     this.settings.initGradesData();
     this.dialogService.close();
+  }
+
+  async onSaveTimetableConfig() {
+    this.newTimetableConfig.update((config: any) => ({
+        ...config,
+        break_step: Number(config.break_step),
+        hour_length: this.parseMinuteInput(config.hour_length),
+        break_time: this.parseMinuteInput(config.break_time),
+    }));
+
+    await this.electron.updateTimetableConfig(this.newTimetableConfig());
+    this.settings.initTimetableConfig();
+    this.dialogService.close();
+  }
+
+  private parseMinuteInput(time: string) {
+    if (!time.includes("min")) {
+      return Number(time);
+    }
+    const minutes = time.split("min")[0];
+    return Number(minutes);
+  }
+
+  checkFieldsForSavingTimetableConfig() {
+    return this.newTimetableConfig().hour_length == null || this.newTimetableConfig().start_time == null || this.newTimetableConfig().end_time == null || this.newTimetableConfig().break_step == null || this.newTimetableConfig().break_time == null;
   }
 
   onUpdateGrade() {
