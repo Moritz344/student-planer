@@ -8,6 +8,15 @@ export interface HomeworkEntry {
   completed: boolean
 }
 
+export interface TimetableConfig {
+  id: number,
+  hour_length: number | null,
+  start_time: string | null,
+  end_time: string | null,
+  break_time: number | null,
+  break_step: number | null
+}
+
 export interface SubjectEntry {
   id: number,
   color: string,
