@@ -46,6 +46,7 @@ db.exec(`CREATE TABLE IF NOT EXISTS grades (
   )`
 );
 
+
 db.exec(`CREATE TABLE IF NOT EXISTS exams (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     fk_subject INTEGER REFERENCES subjects(id) ON DELETE CASCADE,
@@ -63,6 +64,16 @@ db.exec(`CREATE TABLE IF NOT EXISTS timetable (
     room TEXT
   )
 `);
+
+db.exec(`CREATE TABLE IF NOT EXISTS timetable_config (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    hour_length INTEGER NOT NULL,
+    start_time TEXT NOT NULL,
+    end_time TEXT NOT NULL,
+    break_time INTEGER NOT NULL,
+    break_step INTEGER NOT NULL
+  )`
+);
 
 function resetSubjectTable() {
   db.exec("DROP TABLE subjects")
@@ -124,11 +135,29 @@ function resetGrades() {
 }
 
 function updateGrade(grade) {
-  if (grade.id != -1) {
+  if (grade.id > 0) {
     db.prepare("UPDATE grades SET grade = ?,fk_subject = ? WHERE id = ?").run(grade.grade,grade.fk_subject,grade.id);
   } else {
     db.prepare("INSERT INTO grades (fk_subject,grade) VALUES(?,?)").run(grade.fk_subject,grade.grade)
   }
+}
+
+function updateTimetableConfig(config) {
+  if (config.id > 0) {
+    db.prepare("UPDATE timetable_config SET hour_length = ?,start_time = ?,end_time = ?,break_time = ?,break_step = ?")
+      .run(config.hour_length,config.start_time,config.end_time,config.break_time,config.break_step)
+  } else {
+    db.prepare("INSERT INTO timetable_config (hour_length,start_time,end_time,break_time,break_step) VALUES(?,?,?,?,?)")
+      .run(config.hour_length,config.start_time,config.end_time,config.break_time,config.break_step)
+  }
+}
+
+function resetTimetableConfig() {
+  db.exec("DROP TABLE timetable_config");
+}
+
+function listTimetableConfig() {
+  return db.prepare("SELECT * FROM timetable_config").all();
 }
 
 
@@ -164,5 +193,7 @@ module.exports = {
   deleteHomework,
   deleteGrade,
   newExam,
-  resetGrades
+  resetGrades,
+  updateTimetableConfig,
+  listTimetableConfig
 }

@@ -68,6 +68,14 @@ ipcMain.handle("list-homework", async (_,) => {
   return db.listHomework();
 });
 
+ipcMain.handle("list-timetable-config", async (_,) => {
+  return db.listTimetableConfig();
+});
+
+ipcMain.handle("update-timetable-config", async (_,config) => {
+  db.updateTimetableConfig(config);
+});
+
 ipcMain.handle("list-exam",(_) => {
   return db.listExam();
 });
