@@ -1,0 +1,47 @@
+.container {
+  position: absolute;
+  top: 40px;
+  left: 190px;
+  right: -10px;
+  margin: 10px;
+  width: auto;
+  user-select: none;
+}
+
+.days-container {
+  display: grid;
+  grid-template-columns: repeat(7,20%);
+}
+
+.day-container {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 10px;
+  background-color: var(--bg-card);
+
+}
+
+.customize-panel-container {
+  position: absolute;
+  left: 220px;
+  right: 20px;
+  bottom: 10px;
+  background-color: var(--bg-card);
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.customize-panel {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: center;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.customize-panel span {
+  margin-top: 6px;
+  font-size: 20px;
+}
