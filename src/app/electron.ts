@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ExamEntry,HomeworkEntry,GradeEntry, SubjectEntry } from './types';
+import { ExamEntry,HomeworkEntry,GradeEntry, SubjectEntry,TimetableConfig } from './types';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +14,14 @@ export class Electron {
 
   async getAboutData() {
     return await (window as any).electronAPI.getAboutData();
+  }
+
+  async getTimetableConfig(): Promise<TimetableConfig> {
+    return await (window as any).electronAPI.listTimetableConfig();
+  }
+
+  async updateTimetableConfig(config: TimetableConfig) {
+    return await (window as any).electronAPI.updateTimetableConfig(config);
   }
 
   deleteHomework(id: number) {
