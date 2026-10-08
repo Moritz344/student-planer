@@ -1,22 +1,28 @@
-<div class="container">
-  <div class="days-container">
-    @for (d of days(); track $index) {
-      <div class="day-container">
-        @let monthNumber = d.date.split(".")[0];
-        @let month = d.date.split(".")[1];
-        <span style="color: var(--text-muted)">{{ d.name }} </span>
-        <span style="font-size: 20px"> {{ monthNumber }}</span>
-      </div>
-    }
+@if (!startSetup()) {
+  <div class="container">
+    <div class="days-container">
+      @for (d of days(); track $index) {
+        <div class="day-container">
+          @let monthNumber = d.date.split(".")[0];
+          @let month = d.date.split(".")[1];
+          <span style="color: var(--text-muted)">{{ d.name }} </span>
+          <span style="font-size: 20px"> {{ monthNumber }}</span>
+        </div>
+      }
+    </div>
   </div>
-</div>
-@if (settings.timetableConfig() == undefined) {
-<div class="customize-panel-container">
-  <div class="customize-panel">
-    <span>Klicke hier um dein persönlichen Stundenplan zu erstellen:
+  @if (settings.timetableConfig() == undefined) {
+  <div class="customize-panel-container">
+    <div class="customize-panel">
+      <span>Klicke hier um dein persönlichen Stundenplan zu erstellen:
+  
+      </span>
+      <button (click)="onCustomizeTimetable()">anpassen</button>
+    </div>
+  </div>
+  }
+}
 
-    </span>
-    <button (click)="onCustomizeTimetable()">anpassen</button>
-  </div>
-</div>
+@if (startSetup()) {
+  <app-timetable-setup (close)="startSetup.set(false)"></app-timetable-setup>
 }
