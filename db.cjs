@@ -75,14 +75,12 @@ db.exec(`CREATE TABLE IF NOT EXISTS timetable_config (
   )`
 );
 
-function resetSubjectTable() {
-  db.exec("DROP TABLE subjects")
+function resetTable(name) {
+  db.exec("DROP TABLE " + name);
 }
+//resetTable("timetable_config");
 
 
-function resetHomeworkTable() {
-  db.exec("DROP TABLE homework")
-}
 function createTestHomeworkData() {
   db.prepare("INSERT INTO homework (name,fk_subject,due_date) VALUES (?,?,?)").run("Nullstellen berechnen", 1, 1791756000000 )
   db.prepare("INSERT INTO homework (name,fk_subject,due_date) VALUES (?,?,?)").run("Nullstellen berechnen", 1,1790114400000)
@@ -152,9 +150,6 @@ function updateTimetableConfig(config) {
   }
 }
 
-function resetTimetableConfig() {
-  db.exec("DROP TABLE timetable_config");
-}
 
 function listTimetableConfig() {
   return db.prepare("SELECT * FROM timetable_config").all();
