@@ -1,7 +1,10 @@
 import { Component,signal,inject } from '@angular/core';
 import { Electron } from '../electron';
 import { Settings } from '../settings';
+import { TimetableSetup } from './timetable-setup/timetable-setup';
 import { DialogService } from '../dialog/dialog-service';
+
+// TODO: dont use dialogs => use setup cards for setting up basic config and the actual school hours
 
 interface WeekDay {
   name: string,
@@ -10,7 +13,7 @@ interface WeekDay {
 
 @Component({
   selector: 'app-timetable',
-  imports: [],
+  imports: [TimetableSetup],
   templateUrl: './timetable.html',
   styleUrl: './timetable.css',
 })
@@ -20,6 +23,7 @@ export class Timetable {
   public dialog = inject(DialogService);
 
   public days = signal<WeekDay[]>([]);
+  public startSetup = signal<boolean>(false);
 
 
 
@@ -30,7 +34,8 @@ export class Timetable {
 
 
   onCustomizeTimetable() {
-    this.dialog.open("Stundenplan Erstellen","create-timetable");
+    //this.dialog.open("Stundenplan Erstellen","create-timetable");
+    this.startSetup.set(true);
   }
 
   initWeekDays() {
