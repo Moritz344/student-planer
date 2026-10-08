@@ -1,0 +1,29 @@
+<div class="container">
+  <span class="progress">{{ currentStep() }}/ {{ steps() }}</span>
+  <div class="question-container">
+    @let firstQuestion = questions()[currentStep()];
+    @let secondQuestion = questions()[currentStep() + 1];
+
+    <h1>{{ firstQuestion.title }}</h1>
+    @if (firstQuestion.field == "input") {
+      <input spellcheck="false" [placeholder]="firstQuestion.hint" [(ngModel)]="firstQuestion.answer">
+    }
+    @if (secondQuestion) {
+      <h1>{{ secondQuestion.title }}</h1>
+      @if (secondQuestion.field == "input") {
+        <input spellcheck="false" [placeholder]="secondQuestion.hint" [(ngModel)]="secondQuestion.answer">
+      }
+    }
+  </div>
+  <div class="top-options">
+    <button (click)="close.emit()">Abbrechen</button>
+  </div>
+  <div class="bottom-options">
+    <button (click)="prev()">Letzte Frage</button>
+    @if (this.currentStep() + 1 == this.steps()) {
+      <button (click)="finish()">Fertig</button>
+    }@else {
+      <button (click)="next()">Nächste Frage</button>
+    }
+  </div>
+</div>
