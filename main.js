@@ -76,6 +76,14 @@ ipcMain.handle("update-timetable-config", async (_,config) => {
   db.updateTimetableConfig(config);
 });
 
+ipcMain.handle("list-timetable", async (_,) => {
+  return db.listTimetable();
+});
+
+ipcMain.handle("save-timetable", async (_,entries) => {
+  return db.saveTimetable(entries);
+});
+
 ipcMain.handle("list-exam",(_) => {
   return db.listExam();
 });

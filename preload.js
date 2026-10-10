@@ -10,6 +10,8 @@ contextBridge.exposeInMainWorld("electronAPI", {
   listGrades: () => ipcRenderer.invoke("list-grades"),
   listTimetableConfig: () => ipcRenderer.invoke("list-timetable-config"),
   updateTimetableConfig: (config) => ipcRenderer.invoke("update-timetable-config",config),
+  listTimetable: () => ipcRenderer.invoke("list-timetable"),
+  saveTimetable: (entries) => ipcRenderer.invoke("save-timetable",entries),
   deleteHomework: (id) => ipcRenderer.invoke("delete-homework",id),
   resetGrades: () => ipcRenderer.invoke("reset-grades"),
   deleteGrade: (id) => ipcRenderer.invoke("delete-grade",id),

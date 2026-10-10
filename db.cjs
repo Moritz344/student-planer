@@ -78,7 +78,7 @@ db.exec(`CREATE TABLE IF NOT EXISTS timetable_config (
 function resetTable(name) {
   db.exec("DROP TABLE " + name);
 }
-//resetTable("timetable_config");
+//resetTable("timetable");
 
 
 function createTestHomeworkData() {
@@ -106,7 +106,6 @@ function initDefaultData() {
 }
 
 initDefaultData();
-//createTestHomeworkData();
 
 function listSubjects() {
   return db.prepare("SELECT * FROM subjects").all();
@@ -141,9 +140,12 @@ function updateGrade(grade) {
 }
 
 function updateTimetableConfig(config) {
-  if (config.id > 0) {
-    db.prepare("UPDATE timetable_config SET hour_length = ?,start_time = ?,end_time = ?,break_time = ?,break_step = ?")
-      .run(config.hour_length,config.start_time,config.end_time,config.break_time,config.break_step)
+  const existing = db.prepare("SELECT id FROM timetable_config ORDER BY id DESC LIMIT 1").get();
+  const targetId = config.id > 0 ? config.id : existing?.id;
+
+  if (targetId) {
+    db.prepare("UPDATE timetable_config SET hour_length = ?,start_time = ?,end_time = ?,break_time = ?,break_step = ? WHERE id = ?")
+      .run(config.hour_length,config.start_time,config.end_time,config.break_time,config.break_step,targetId)
   } else {
     db.prepare("INSERT INTO timetable_config (hour_length,start_time,end_time,break_time,break_step) VALUES(?,?,?,?,?)")
       .run(config.hour_length,config.start_time,config.end_time,config.break_time,config.break_step)
@@ -152,7 +154,26 @@ function updateTimetableConfig(config) {
 
 
 function listTimetableConfig() {
-  return db.prepare("SELECT * FROM timetable_config").all();
+  return db.prepare("SELECT * FROM timetable_config ORDER BY id DESC LIMIT 1").all();
+}
+
+function resetTimetable() {
+  db.prepare("DELETE FROM timetable").run();
+}
+
+function saveTimetable(entries) {
+  const insert = db.prepare("INSERT INTO timetable (fk_subject,day,start_time,end_time,room) VALUES(?,?,?,?,?)");
+  const replaceAll = db.transaction((rows) => {
+    resetTimetable();
+    for (const row of rows) {
+      insert.run(row.fk_subject,row.day,row.start_time,row.end_time,row.room);
+    }
+  });
+  replaceAll(entries);
+}
+
+function listTimetable() {
+  return db.prepare("SELECT * FROM timetable ORDER BY day,start_time").all();
 }
 
 
@@ -190,5 +211,7 @@ module.exports = {
   newExam,
   resetGrades,
   updateTimetableConfig,
-  listTimetableConfig
+  listTimetableConfig,
+  saveTimetable,
+  listTimetable,
 }
