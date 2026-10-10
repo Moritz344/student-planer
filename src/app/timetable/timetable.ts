@@ -6,8 +6,6 @@ import { buildSchedule, ScheduleSlot } from './schedule';
 import { TimetableSetup } from './timetable-setup/timetable-setup';
 import { DialogService } from '../dialog/dialog-service';
 
-// TODO: dont use dialogs => use setup cards for setting up basic config and the actual school hours
-
 interface WeekDay {
   name: string,
   date: string
