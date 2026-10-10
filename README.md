@@ -1,7 +1,10 @@
+<h1 align="center"> 
+  student-planer
+</h1>
+<img width="1240" height="869" alt="1" src="https://github.com/user-attachments/assets/925e8510-3d5c-487c-b101-016fa9d3d13b" />  
+
 > [!WARNING]
 > **This project is a work in progress. Expect changes and possible instability.**
-
-<img width="1240" height="869" alt="1" src="https://github.com/user-attachments/assets/925e8510-3d5c-487c-b101-016fa9d3d13b" />  
 
   <details>
     <summary>More Screenshots</summary>
