@@ -1,5 +1,5 @@
 import { Injectable,signal,inject } from '@angular/core';
-import { HomeworkEntry,ExamEntry,TimetableConfig } from './types';
+import { HomeworkEntry,ExamEntry,TimetableConfig,TimetableEntry } from './types';
 import { Electron } from './electron';
 
 @Injectable({
@@ -15,6 +15,7 @@ export class Settings {
   public gradesData = signal<any[]>([]);
   public averageGrade = signal<number>(0);
   public subjectData = signal<any[]>([]);
+  public timetableData = signal<TimetableEntry[]>([]);
 
   public timetableConfig = signal<TimetableConfig>({
     id: 0,
@@ -89,6 +90,16 @@ export class Settings {
     const config: any = await this.electron.getTimetableConfig();
     this.timetableConfig.set(config[0]);
   }
+
+  async initTimetableData() {
+    this.timetableData.set(await this.electron.getTimetable());
+  }
+
+  async saveTimetable(entries: TimetableEntry[]) {
+    await this.electron.saveTimetable(entries);
+    await this.initTimetableData();
+  }
+
 
   async initExamsData() {
     this.examsData.set(await this.electron.getExam());
