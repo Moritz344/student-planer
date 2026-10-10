@@ -40,11 +40,6 @@ export class Timetable {
   }
 
 
-  onCustomizeTimetable() {
-    //this.dialog.open("Stundenplan Erstellen","create-timetable");
-    this.startSetup.set(true);
-  }
-
   getLesson(day: number, start: string): TimetableEntry | undefined {
     return this.settings.timetableData().find(e => e.day === day && e.start_time === start);
   }
