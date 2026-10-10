@@ -76,30 +76,6 @@ export class Dialog implements OnInit {
     this.dialogService.close();
   }
 
-  async onSaveTimetableConfig() {
-    this.newTimetableConfig.update((config: any) => ({
-        ...config,
-        break_step: Number(config.break_step),
-        hour_length: this.parseMinuteInput(config.hour_length),
-        break_time: this.parseMinuteInput(config.break_time),
-    }));
-
-    await this.electron.updateTimetableConfig(this.newTimetableConfig());
-    this.settings.initTimetableConfig();
-    this.dialogService.close();
-  }
-
-  private parseMinuteInput(time: string) {
-    if (!time.includes("min")) {
-      return Number(time);
-    }
-    const minutes = time.split("min")[0];
-    return Number(minutes);
-  }
-
-  checkFieldsForSavingTimetableConfig() {
-    return this.newTimetableConfig().hour_length == null || this.newTimetableConfig().start_time == null || this.newTimetableConfig().end_time == null || this.newTimetableConfig().break_step == null || this.newTimetableConfig().break_time == null;
-  }
 
   onUpdateGrade() {
     this.electron.updateGrade(this.dialogService.gradeDataToEdit());
