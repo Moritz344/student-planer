@@ -39,10 +39,10 @@
 }
 .container-options {
   display: flex;
-  justify-content: right;
+  justify-content: space-between;
+  margin-bottom: 10px;
 }
 .container-options button{
-  margin-bottom: 10px;
   background-color: var(--accent-color);
 }
 .container-options button:hover{
