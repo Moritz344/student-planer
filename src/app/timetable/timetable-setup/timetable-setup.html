@@ -23,7 +23,7 @@
         <div class="lessons">
           @for (p of currentDay().slots; track p.period) {
             <div class="lesson-item">
-              <span class="lesson-label">{{ p.period }}. Stunde</span>
+              <span>{{ p.period }}. Stunde</span>
               <select [(ngModel)]="p.fk_subject">
                 @for (s of settings.subjectData(); track s.id) {
                     <option [ngValue]="s.id">{{ s.name }}</option>
