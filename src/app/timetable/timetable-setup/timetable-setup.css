@@ -56,10 +56,6 @@ h1 {
   border-radius: var(--radius);
 }
 
-.lesson-label {
-  font-weight: 700;
-  color: var(--text-muted);
-}
 
 .lesson-item select,
 .lesson-item input {
