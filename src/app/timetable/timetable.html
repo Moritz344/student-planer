@@ -50,15 +50,17 @@
         }
       </div>
     }
-    <div class="bottom">
-      <button (click)="startSetup.set(true)">Anpassen</button>
-    </div>
+    @if (settings.timetableData().length > 0) {
+      <div class="bottom">
+        <button (click)="startSetup.set(true)">Anpassen</button>
+      </div>
+    }
 
     @if (settings.timetableData().length == 0) {
       <div class="customize-panel-container">
         <div class="customize-panel">
-          <span>Stundenplan anpassen:</span>
-          <button class="suggested" (click)="onCustomizeTimetable()">anpassen</button>
+          <span>Stundenplan erstellen:</span>
+          <button class="suggested" (click)="startSetup.set(true)">Erstellen</button>
         </div>
       </div>
     }
