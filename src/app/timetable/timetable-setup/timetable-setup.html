@@ -1,29 +1,58 @@
 <div class="container">
-  <span class="progress">{{ currentStep() }}/ {{ steps() }}</span>
-  <div class="question-container">
-    @let firstQuestion = questions()[currentStep()];
-    @let secondQuestion = questions()[currentStep() + 1];
+  @if (!startWithLessons()) {
+    <div class="question-container">
+      @let firstQuestion = questions()[currentStep()];
+      @let secondQuestion = questions()[currentStep() + 1];
 
-    <h1>{{ firstQuestion.title }}</h1>
-    @if (firstQuestion.field == "input") {
-      <input spellcheck="false" [placeholder]="firstQuestion.hint" [(ngModel)]="firstQuestion.answer">
-    }
-    @if (secondQuestion) {
-      <h1>{{ secondQuestion.title }}</h1>
-      @if (secondQuestion.field == "input") {
-        <input spellcheck="false" [placeholder]="secondQuestion.hint" [(ngModel)]="secondQuestion.answer">
+      <h1>{{ firstQuestion.title }}</h1>
+      @if (firstQuestion.field == "input") {
+        <input spellcheck="false" [placeholder]="firstQuestion.hint" [(ngModel)]="firstQuestion.answer">
       }
+      <br>
+      @if (secondQuestion) {
+        <h1>{{ secondQuestion.title }}</h1>
+        @if (secondQuestion.field == "input") {
+          <input spellcheck="false" [placeholder]="secondQuestion.hint" [(ngModel)]="secondQuestion.answer">
+        }
+      }
+    </div>
+  }
+  <div class="lessons-container">
+    @if (startWithLessons()) {
+        <h1>{{ currentDay().name }}</h1>
+        <div class="lessons">
+          @for (p of currentDay().slots; track p.period) {
+            <div class="lesson-item">
+              <span class="lesson-label">{{ p.period }}. Stunde</span>
+              <select [(ngModel)]="p.fk_subject">
+                @for (s of settings.subjectData(); track s.id) {
+                    <option [ngValue]="s.id">{{ s.name }}</option>
+                }
+              </select>
+              <input [(ngModel)]="p.room" spellcheck="false" placeholder="Raum (optional)">
+            </div>
+          }
+        </div>
     }
   </div>
   <div class="top-options">
-    <button (click)="close.emit()">Abbrechen</button>
+    <button (click)="close.emit()" class="exit">Abbrechen</button>
   </div>
   <div class="bottom-options">
-    <button (click)="prev()">Letzte Frage</button>
-    @if (this.currentStep() + 1 == this.steps()) {
-      <button (click)="finish()">Fertig</button>
+    @if (!startWithLessons()) {
+      <button (click)="prevQuestion()" [disabled]="isFirstStep()">Vorherige Frage</button>
+      @if (this.currentStep() + 1 == this.steps()) {
+        <button (click)="finishTimetableConfigQuestions()">Speichern und Stunden einrichten</button>
+      }@else {
+        <button (click)="nextQuestion()">Nächste Frage</button>
+      }
     }@else {
-      <button (click)="next()">Nächste Frage</button>
+      <button (click)="prevDay()" [disabled]="isFirstDay()">Vorheriger Tag</button>
+      @if (isLastDay()) {
+        <button class="suggested" (click)="finish()">Fertig</button>
+      }@else {
+        <button (click)="nextDay()">Nächster Tag</button>
+      }
     }
   </div>
 </div>
