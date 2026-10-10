@@ -1,6 +1,6 @@
 const Database = require("better-sqlite3");
 
-const db = new Database("student-planer.db")
+const db = new Database("schulplaner.db")
 
 const defaultSubjects = [
   { name: "Mathematik",id: 1,color: "blue"},
@@ -181,7 +181,7 @@ function listGrades() {
 }
 
 function updateHomework(homework) {
-  if (homework.id != -1)  {
+  if (homework.id > 0)  {
     db.prepare("UPDATE homework SET completed = ? WHERE id = ?")
       .run(+homework.completed,homework.id)
   } else {
