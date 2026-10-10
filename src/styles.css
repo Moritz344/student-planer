@@ -220,6 +220,13 @@ input {
 }
 
 
+.exit {
+  background-color: var(--danger);
+}
+
+.exit:hover{
+  background-color: var(--danger-hover);
+}
 
 
 
