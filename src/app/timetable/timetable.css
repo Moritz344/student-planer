@@ -1,46 +1,192 @@
 .container {
   position: absolute;
-  top: 40px;
-  left: 190px;
-  right: -10px;
-  margin: 10px;
+  top: 50px;
+  left: 200px;
+  right: 0px;
+  bottom: 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
   user-select: none;
 }
 
-.days-container {
-  display: grid;
-  grid-template-columns: repeat(7,20%);
+.empty-state {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  font-size: 18px;
 }
 
-.day-container {
+.timetable-grid {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  display: grid;
+  grid-template-columns: 76px repeat(5, minmax(0, 1fr));
+  gap: 1px;
+  background-color: var(--border-color);
+}
+
+.timetable-grid > * {
+  background-color: var(--bg-card);
+  box-sizing: border-box;
+}
+
+.corner {
+  background-color: var(--bg-sidebar);
+}
+
+.day-header {
   display: flex;
   flex-direction: column;
-  text-align: center;
-  padding: 10px;
-  background-color: var(--bg-card);
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  background-color: var(--bg-sidebar);
+}
 
+.day-name {
+  font-weight: 700;
+}
+
+.day-date {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.time-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.time-end {
+  opacity: 0.6;
+}
+
+.slot-cell {
+  padding: 4px;
+  min-height: 58px;
+  display: flex;
+}
+
+.lesson {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  padding: 6px 8px;
+  overflow: hidden;
+  transition: 0.3s ease-out;
+}
+
+.lesson:hover {
+}
+
+.lesson-subject {
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lesson-room {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.slim-rect img {
+  display: inline-block;
+  width: 4px;
+  height: 90%;
+  border-radius: 2px;
+  background: #fff;
+  margin-right: 10px;
+}
+
+.subject-color-container {
+  display: flex;
+  flex-direction: row;
+  margin-top: 7px;
+  height: 100%;
+}
+
+.lesson-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.slim-rect img.green {
+  filter: brightness(0) saturate(100%) invert(41%) sepia(50.1%) saturate(318.8%) hue-rotate(74.7deg) brightness(129.5%) contrast(144.6%);
+}
+
+.slim-rect img.blue {
+  filter: brightness(0) saturate(100%) invert(52.5%) sepia(50.9%) saturate(1143.8%) hue-rotate(172deg) brightness(84.8%) contrast(94.5%);
+}
+
+.slim-rect img.yellow {
+  filter: brightness(0) saturate(100%) invert(44.2%) sepia(51.2%) saturate(553%) hue-rotate(14.5deg) brightness(166.7%) contrast(99%);
+}
+
+.slim-rect img.gray {
+  filter: brightness(0) invert(60.4%);
+}
+
+.slim-rect img.red {
+  filter: brightness(0) saturate(100%) invert(29.4%) sepia(21.7%) saturate(1353.8%) hue-rotate(311.1deg) brightness(149.8%) contrast(118.3%);
 }
 
 .customize-panel-container {
-  position: absolute;
-  left: 220px;
-  right: 20px;
-  bottom: 10px;
+  flex: 0 0 auto;
   background-color: var(--bg-card);
   padding: 10px;
+  margin: 10px;
   border-radius: 10px;
+}
+
+.bottom{
+  width: 100%;
+  background-color: var(--bg-card);
+  margin-top: -12px;
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+  border-top: 1px solid var(--border-color);
+}
+
+.bottom button {
+  margin: 5px;
+}
+
+.edit-timetable {
+  width: 100px;
 }
 
 .customize-panel {
   display: flex;
   flex-direction: row;
   gap: 10px;
+  align-items: center;
   justify-content: center;
-  padding: 10px;
-  border-radius: 10px;
 }
 
 .customize-panel span {
-  margin-top: 6px;
-  font-size: 20px;
+  font-size: 18px;
+}
+
+.suggested {
+  background-color: var(--accent-color);
+  color: #fff;
+}
+
+.suggested:hover {
+  background-color: var(--accent-hover);
 }

@@ -1,26 +1,68 @@
 @if (!startSetup()) {
   <div class="container">
-    <div class="days-container">
-      @for (d of days(); track $index) {
-        <div class="day-container">
-          @let monthNumber = d.date.split(".")[0];
-          @let month = d.date.split(".")[1];
-          <span style="color: var(--text-muted)">{{ d.name }} </span>
-          <span style="font-size: 20px"> {{ monthNumber }}</span>
+    @if (settings.timetableData().length == 0) {
+      <div class="empty-state">
+        <span>Du hast noch keinen Stundenplan erstellt.</span>
+      </div>
+    } @else {
+      <div class="timetable-grid">
+        <div class="corner"></div>
+        @for (d of days(); track d.date) {
+          <div class="day-header">
+            <span class="day-name">{{ d.name }}</span>
+            <span class="day-date">{{ d.date }}</span>
+          </div>
+        }
+
+
+        @for (slot of schedule(); track slot.period) {
+          <div class="time-cell">
+            <span>{{ slot.start }}</span>
+            <span class="time-end">{{ slot.end }}</span>
+          </div>
+          @for (d of days(); track d.date; let i = $index) {
+            @let lesson = getLesson(i + 1, slot.start);
+            @let subject = subjectFor(lesson);
+            <div class="slot-cell">
+              @if (lesson) {
+                <div class="lesson">
+                  <div class="subject-color-container">
+                    <div class="slim-rect">
+                      <img 
+                      [class.green]="subject.color == 'green'"
+                      [class.blue]="subject.color == 'blue'"
+                      [class.yellow]="subject.color == 'yellow'"
+                      [class.gray]="subject.color == 'gray'"
+                      [class.red]="subject.color == 'red'"
+                      src="dot.svg" >
+                    </div>
+                  <div class="lesson-content">
+                    <span class="lesson-subject">{{ subject?.name ?? 'Fach' }}</span>
+                    @if (lesson.room) {
+                      <span class="lesson-room">{{ lesson.room }}</span>
+                    }
+                  </div>
+                  </div>
+                </div>
+              }
+            </div>
+          }
+        }
+      </div>
+    }
+    <div class="bottom">
+      <button (click)="startSetup.set(true)">Anpassen</button>
+    </div>
+
+    @if (settings.timetableData().length == 0) {
+      <div class="customize-panel-container">
+        <div class="customize-panel">
+          <span>Stundenplan anpassen:</span>
+          <button class="suggested" (click)="onCustomizeTimetable()">anpassen</button>
         </div>
-      }
-    </div>
+      </div>
+    }
   </div>
-  @if (settings.timetableConfig() == undefined) {
-  <div class="customize-panel-container">
-    <div class="customize-panel">
-      <span>Klicke hier um dein persönlichen Stundenplan zu erstellen:
-  
-      </span>
-      <button (click)="onCustomizeTimetable()">anpassen</button>
-    </div>
-  </div>
-  }
 }
 
 @if (startSetup()) {
