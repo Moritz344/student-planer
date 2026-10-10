@@ -2,7 +2,7 @@
   "name": "schulplaner",
   "version": "0.0.0",
   "author": "Moritz Maier",
-  "description": "student planer",
+  "description": "Einfach Noten, Prüfungen, Hausaufgaben und deinen Stundenplan verfolgen.",
   "main": "main.js",
   "scripts": {
     "ng": "ng",
