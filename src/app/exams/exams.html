@@ -1,10 +1,15 @@
 <div class="container">
 <div class="container-options">
+  <select [(ngModel)]="searchFilter">
+    <option [ngValue]="0">Alle</option>
+    <option [ngValue]="1">Erledigte</option>
+    <option [ngValue]="2">Kommende</option>
+  </select>
   <button (click)="onNewExam()">Neue Prüfung</button>
 </div>
   <div class="exams-container">
-    @if (settings.examsData().length > 0) {
-      @for (e of settings.examsData(); track $index) {
+    @if (examsData().length > 0) {
+      @for (e of examsData(); track $index) {
         <div class="exam-item">
           <div class="slim-rect">
           <img class="item-icon"
