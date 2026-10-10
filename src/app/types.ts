@@ -17,6 +17,26 @@ export interface TimetableConfig {
   break_step: number | null
 }
 
+export interface TimetableSlot {
+  period: number,
+  fk_subject: number | null,
+  room: string
+}
+
+export interface TimetableDay {
+  day: number,
+  name: string,
+  slots: TimetableSlot[]
+}
+
+export interface TimetableEntry {
+  day: number,
+  fk_subject: number | null,
+  start_time: string,
+  end_time: string,
+  room: string | null
+}
+
 export interface SubjectEntry {
   id: number,
   color: string,
