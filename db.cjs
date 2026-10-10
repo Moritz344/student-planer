@@ -78,7 +78,6 @@ db.exec(`CREATE TABLE IF NOT EXISTS timetable_config (
 function resetTable(name) {
   db.exec("DROP TABLE " + name);
 }
-//resetTable("timetable");
 
 
 function createTestHomeworkData() {
