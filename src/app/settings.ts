@@ -7,7 +7,7 @@ import { Electron } from './electron';
 })
 export class Settings {
   public electron = inject(Electron);
-  public view = signal<"timetable" | "grades" | "home" | "exams">("timetable");
+  public view = signal<"timetable" | "grades" | "home" | "exams">("home");
   public showAbout = signal<boolean>(false);
 
   public homeworkData = signal<HomeworkEntry[]>([]);
